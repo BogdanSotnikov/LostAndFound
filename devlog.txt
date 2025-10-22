@@ -1,0 +1,17 @@
+LAF DEVLOG
+Jake Liu, Bogdan Sotnikov, Joyce Lin, Naomi Kurian
+P00: Half-Quick
+----------------------------
+
+* Each entry should begin with the following format: firstL -- TIMESTAMP ( e.g.: topherM -- 1999-12-31 23:59 )
+* Most recent entry at the bottom, separated from previous with a newline
+
+firstL -- TIMESTAMP (temp entry for format)
+* NEW CHANGES:
+    -
+    -
+    -
+* ERRORS/BUGS:
+    -
+    -
+    -
