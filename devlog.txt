@@ -26,7 +26,7 @@ INITIAL DD SUBMISSION
 	- diagrams for relations and organization
 	- assigned tasks (may be subject to change)
 
-JoyceL -- 2025-10-23 22:11
+joyceL -- 2025-10-23 22:11
 INITIAL DD REVIEW
 * SUMMARY OF PEER REVIEW:
     - Suggestions were given regarding way we should do things as well as comments about our organization of 
