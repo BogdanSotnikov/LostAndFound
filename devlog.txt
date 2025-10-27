@@ -43,3 +43,13 @@ INITIAL DD REVIEW
 		page (team carrots) -- will attempt to make site map more clear, either with comments or better arrow placements
 	- In addition to these suggestions, we had received compliments in regards to any potential extra features as well as
 	thorough explanations. 
+
+naomiK -- 2025-10-26 21:20
+DD PIVOT
+* NEW CHANGES:
+    - Chose sigma option
+    - Now using rowid to help with selecting from data
+	- Can now only edit webpage once 
+	- Updated back/front-end components of component map 
+	- Updated component relationships to reflect new scenario
+	- Added string of editer stories to user base
