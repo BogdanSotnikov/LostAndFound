@@ -11,6 +11,9 @@ DB_FILE = "data.db"
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor()
 
+c.execute("CREATE TABLE IF NOT EXIST user_base(username TEXT, password TEXT, pfp TEXT, path TEXT, contributions TEXT, times_cont INTEGER);")
+c.execute("CREATE TABLE IF NOT EXIST story_base(path TEXT, title TEXT, content TEXT, last_entry TEXT, editors TEXT, author INTEGER);")
+
 # HTML PAGES
 # LANDING PAGE
 @app.route('/')
@@ -51,20 +54,27 @@ def authenticate(query):
     return render_template(query)
 
 def fetch(table, rowid, data, criteria):
-    query = "SELECT " + data + " FROM " + table + " WHERE ROWID=" + rowid
-    for c in split(criteria,"&"):
+    query = f"SELECT {data} FROM {table} WHERE ROWID={rowid}"
+    for c in split(criteria,"&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
         query += " AND " + c
-    c.execute(query)
+    c.execute(query + ";")
     return c.fetchall()
 
 def check_existence(table, s_rowid):
     if 'u_rowid' in session:
         if table == story_base:
-            c.execute("SELECT editors FROM story_base WHERE ROWID="+s_rowid)
+            c.execute(f"SELECT editors FROM story_base WHERE ROWID={s_rowid};")
             return str(session['u_rowid']) in split(c.fetchall(),',')
         else:
-            c.execute("SELECT contributions FROM user_base WHERE ROWID=" + str(session['u_rowid']))
+            c.execute(f"SELECT contributions FROM user_base WHERE ROWID={session['u_rowid']};")
             return str(s_rowid) in split(c.fetchall(), ',')
+
+def create_user(username, password):
+    pfp = "temp"
+    path = "temp"
+    contributions = ""
+    times_cont = 0
+    c.execute(f"INSERT INTO user_base VALUES(\"{username}\", \"{password}\", \"{pfp}\", \"{path}\", \"{contributions}\", {times_cont},)")
 
 # SQLite
 db.commit()
