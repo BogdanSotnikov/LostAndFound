@@ -15,14 +15,16 @@ c = db.cursor()
 # LANDING PAGE
 @app.route('/')
 def homepage():
-    authenticate()
+    if not 'u_rowid' in session: return redirect('/login')
 
 # USER INTERACTIONS
 @app.route('/login')
 def login():
+    return render_template("login.html")
 
 @app.route('/register')
 def register():
+    pass
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
@@ -45,15 +47,15 @@ def author(u_rowid):
 def authenticate():
     if not 'u_rowid' in session: return redirect('/login')
 
-def fetch(string TABLE, int ROWID, string DATA, string CRITERIA):
+def fetch(TABLE, ROWID, DATA, CRITERIA):
     query = "SELECT " + DATA + " FROM " + TABLE + " WHERE ROWID=" + ROWID
     for criteria in split(CRITERIA,"&"):
         query += " AND " + criteria
     c.execute(query)
     return c.fetchall()
 
-def check_existence(string TABLE, int S_ROWID):
-    if if 'u_rowid' in session:
+def check_existence(TABLE, S_ROWID):
+    if 'u_rowid' in session:
         if TABLE == story_base:
             c.execute("SELECT editors FROM story_base WHERE ROWID=S_ROWID")
             return str(session['u_rowid']) in split(c.fetchall(),',')
@@ -68,4 +70,4 @@ db.close()
 # Flask
 if __name__=='__main__':
     app.debug = True
-    app.run()
+    app.run(port = 8000)
