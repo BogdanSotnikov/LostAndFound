@@ -15,6 +15,7 @@ c = db.cursor()
 # LANDING PAGE
 @app.route('/')
 def homepage():
+    print("homepage")
     if not 'u_rowid' in session: return redirect('/login')
 
 # USER INTERACTIONS
