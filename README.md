@@ -1,19 +1,19 @@
-#Telephone Online 2.0 V3 MKIV .io by Lost and Found
+# Telephone Online 2.0 V3 MKIV .io by Lost and Found
 
-###PM: Bogdan Sotnikov
+### PM: Bogdan Sotnikov
 
-###Devos: Jake Liu, Joyce Lin, Naomi Kurian
+### Devos: Jake Liu, Joyce Lin, Naomi Kurian
 
 
-##Description: 
+## Description: 
 
-##Install guide:
+## Install guide:
 
-###Install prerequisites:
+### Install prerequisites:
 
 flask, python 3
 
-###Step 1:
+### Step 1:
 
 run this in your terminal:
 
@@ -21,11 +21,11 @@ run this in your terminal:
 git clone git@github.com:BogdanSotnikov/LostAndFound.git
 ```
 
-###Step 2:
+### Step 2:
 
 you are done
 
-##Launch codes:
+## Launch codes:
 
 now run this:
 
