@@ -53,3 +53,13 @@ DD PIVOT
 	- Updated back/front-end components of component map 
 	- Updated component relationships to reflect new scenario
 	- Added string of editer stories to user base
+
+naomiK -- 2025-10-27 21:10
+DD REVISION
+* NEW CHANGES:
+	-Task breakdown updated to act similarly to a checklist
+	-Expected delivery column added to task tables
+	-New methods added (subject to change)
+	-Database organization updated to better reflect assignment reqs
+	-Component map colors updated for greater clarity 
+    
