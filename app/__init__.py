@@ -64,17 +64,25 @@ def check_existence(table, s_rowid):
     if 'u_rowid' in session:
         if table == story_base:
             c.execute(f"SELECT editors FROM story_base WHERE ROWID={s_rowid};")
-            return str(session['u_rowid']) in split(c.fetchall(),',')
+            return str(session['u_rowid']) in split(c.fetchall()[0],',')
         else:
             c.execute(f"SELECT contributions FROM user_base WHERE ROWID={session['u_rowid']};")
-            return str(s_rowid) in split(c.fetchall(), ',')
+            return str(s_rowid) in split(c.fetchall()[0], ',')
 
 def create_user(username, password):
-    pfp = "temp"
-    path = "temp"
-    contributions = ""
-    times_cont = 0
-    c.execute(f"INSERT INTO user_base VALUES(\"{username}\", \"{password}\", \"{pfp}\", \"{path}\", \"{contributions}\", {times_cont},)")
+    c.execute(f"SELECT {username} FROM user_base")
+    if not username in c.fetchall():
+        # creates user in table
+        pfp = "temp"
+        contributions = ""
+        times_cont = 0
+        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', temp, \'{contributions}\', {times_cont},)")
+
+        # set path
+        c.execute(f"SELECT rowid FROM user_base WHERE username={username}")
+        c.execute(f"UPDATE user_base SET path = '/profile/{c.fetchall()[0]}' WHERE username={username}")
+        return True
+    return False
 
 # SQLite
 db.commit()
