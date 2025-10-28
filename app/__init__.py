@@ -15,55 +15,57 @@ c = db.cursor()
 # LANDING PAGE
 @app.route('/')
 def homepage():
-    print("homepage")
-    if not 'u_rowid' in session: return redirect('/login')
+    return authenticate("landing.html")
 
 # USER INTERACTIONS
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    return authenticate("login.html")
 
 @app.route('/register')
 def register():
-    pass
+    return authenticate("register.html")
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
-    authenticate()
+    return authenticate("profile.html")
 
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def story(s_rowid):
-    authenticate()
+    return authenticate("story.html")
 
 @app.route('/edit/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def edit(s_rowid):
-    authenticate()
+    return authenticate("edit.html")
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def author(u_rowid):
-    authenticate()
+    return authenticate("author.html")
 
 # HELPER FUNCTIONS
-def authenticate():
-    if not 'u_rowid' in session: return redirect('/login')
+def authenticate(query):
+    if 'login' in query or 'register' in query:
+        if 'u_rowid' in session: return redirect('/')
+    elif not 'u_rowid' in session: return redirect("/login")
+    return render_template(query)
 
-def fetch(TABLE, ROWID, DATA, CRITERIA):
-    query = "SELECT " + DATA + " FROM " + TABLE + " WHERE ROWID=" + ROWID
-    for criteria in split(CRITERIA,"&"):
-        query += " AND " + criteria
+def fetch(table, rowid, data, criteria):
+    query = "SELECT " + data + " FROM " + table + " WHERE ROWID=" + rowid
+    for c in split(criteria,"&"):
+        query += " AND " + c
     c.execute(query)
     return c.fetchall()
 
-def check_existence(TABLE, S_ROWID):
+def check_existence(table, s_rowid):
     if 'u_rowid' in session:
-        if TABLE == story_base:
-            c.execute("SELECT editors FROM story_base WHERE ROWID=S_ROWID")
+        if table == story_base:
+            c.execute("SELECT editors FROM story_base WHERE ROWID="+s_rowid)
             return str(session['u_rowid']) in split(c.fetchall(),',')
         else:
             c.execute("SELECT contributions FROM user_base WHERE ROWID=" + str(session['u_rowid']))
-            return str(S_ROWID) in split(c.fetchall(), ',')
-            
+            return str(s_rowid) in split(c.fetchall(), ',')
+
 # SQLite
 db.commit()
 db.close()
@@ -71,4 +73,4 @@ db.close()
 # Flask
 if __name__=='__main__':
     app.debug = True
-    app.run(port = 8000)
+    app.run()
