@@ -57,9 +57,9 @@ DD PIVOT
 naomiK -- 2025-10-27 21:10
 DD REVISION
 * NEW CHANGES:
-	-Task breakdown updated to act similarly to a checklist
-	-Expected delivery column added to task tables
-	-New methods added (subject to change)
-	-Database organization updated to better reflect assignment reqs
-	-Component map colors updated for greater clarity 
+	- Task breakdown updated to act similarly to a checklist
+	- Expected delivery column added to task tables
+	- New methods added (subject to change)
+	- Database organization updated to better reflect assignment reqs
+	- Component map colors updated for greater clarity 
     
