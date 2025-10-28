@@ -34,5 +34,5 @@ cd LostAndFound/app
 python __init__.py
 ```
 
-ctr-click the link in the flask console
+ctrl-click the link in the flask console
 
