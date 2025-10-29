@@ -48,7 +48,8 @@ def register():
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
-    if not ('u_rowid' in session and 'u_rowid' == u_rowid): return redirect("/login")
+    session[u_rowid] = 1
+    if not 'u_rowid' in session and 'u_rowid' == u_rowid: return redirect("/login")
     u_data = fetch('user_base', u_rowid, 'username,times_cont,contributions', "")[0]
     return render_template("profile.html", username=u_data[0], times_cont=u_data[1])
 
@@ -69,26 +70,26 @@ def author(u_rowid):
     return render_template("author.html")
 
 # HELPER FUNCTIONS
-def authenticate(query):
-
 def fetch(table, rowid, data, criteria):
-    query = "SELECT "
-    for d in split(data, ","):
-        query += d + ","
-    query += f" FROM {table} WHERE ROWID={rowid}"
-    for c in split(criteria,"&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
-        query += " AND " + c
-    c.execute(query + ";")
-    return c.fetchall()
+    db = sqlite3.connect(DB_FILE)
+    cu = db.cursor()
+
+    query = f"SELECT {data} FROM {table} WHERE ROWID={rowid}"
+    for c in criteria.split("&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
+        if not c == "": query += f" AND {c}"
+    query+=";"
+    cu.execute(query)
+
+    return cu.fetchall()
 
 def check_existence(table, s_rowid):
     if 'u_rowid' in session:
         if table == story_base:
             c.execute(f"SELECT editors FROM story_base WHERE ROWID={s_rowid};")
-            return str(session['u_rowid']) in split(c.fetchall()[0],',')
+            return str(session['u_rowid']) in c.fetchall()[0].split(',')
         else:
             c.execute(f"SELECT contributions FROM user_base WHERE ROWID={session['u_rowid']};")
-            return str(s_rowid) in split(c.fetchall()[0], ',')
+            return str(s_rowid) in c.fetchall()[0].split(',')
 
 def create_user(username, password):
     db = sqlite3.connect(DB_FILE)
