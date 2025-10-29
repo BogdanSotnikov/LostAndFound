@@ -8,9 +8,16 @@
 
   <body>
     <button onclick="location.href='/'"class="back">&#8592;</button>
-    <!-- pfp
-      username
-      a contributor badge if they have one
+    <!-- pfp -->
+    <p> {{ username }} <br>
+      {{ badge }}
+      {{ times_cont }}
+    </p> <br>
+    <ul>
+      {% for story in contributions %}
+        <li> {{ story }} </li>
+    </ul>
+    <!--a contributor badge if they have one
       times contributed
       contributions list (all should be urls)-->
   </body>

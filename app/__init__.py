@@ -26,51 +26,56 @@ pfps = []
 # LANDING PAGE
 @app.route('/')
 def homepage():
+    if not 'u_rowid' in session: return redirect("/login")
     if request.method == 'POST':
         session['u_rowid'] = request.form['u_rowid']
-    return authenticate("landing.html")
+    return render_template("landing.html")
 
 # USER INTERACTIONS
 @app.route('/login')
 def login():
-    return authenticate("login.html")
+    if 'u_rowid' in session: return redirect("/")
+    return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    if 'u_rowid' in session: return redirect("/")
     if request.method == "POST":
         if not request.form['password'] == request.form['confirm']: return render_template("register.html", error="Passwords do not match, please try again! <br><br>")
         if not create_user(request.form['username'], request.form['password']): return render_template("register.html", error="Username already taken, please try again! <br><br>")
         else: return redirect("/login")
-    return authenticate("register.html")
+    return render_template("register.html")
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
-    #session['u_rowid'] = 1 # temp for testing
-    #session.pop('u_rowid')
-    return authenticate("profile.html")
+    if not ('u_rowid' in session and 'u_rowid' == u_rowid): return redirect("/login")
+    u_data = fetch('user_base', u_rowid, 'username,times_cont,contributions', "")[0]
+    return render_template("profile.html", username=u_data[0], times_cont=u_data[1])
 
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def story(s_rowid):
-    return authenticate("story.html")
+    if not 'u_rowid' in session: return redirect("/login")
+    return render_template("story.html")
 
 @app.route('/edit/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def edit(s_rowid):
-    return authenticate("edit.html")
+    if not 'u_rowid' in session: return redirect("/login")
+    return render_template("edit.html")
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def author(u_rowid):
-    return authenticate("author.html")
+    if not 'u_rowid' in session: return redirect("/login")
+    return render_template("author.html")
 
 # HELPER FUNCTIONS
 def authenticate(query):
-    if 'login' in query or 'register' in query:
-        if 'u_rowid' in session: return redirect('/')
-    elif not 'u_rowid' in session: return redirect("/login")
-    return render_template(query)
 
 def fetch(table, rowid, data, criteria):
-    query = f"SELECT {data} FROM {table} WHERE ROWID={rowid}"
+    query = "SELECT "
+    for d in split(data, ","):
+        query += d + ","
+    query += f" FROM {table} WHERE ROWID={rowid}"
     for c in split(criteria,"&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
         query += " AND " + c
     c.execute(query + ";")
