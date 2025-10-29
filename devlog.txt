@@ -72,3 +72,11 @@ PRELIM CODING
       - authenticate() has been dropped as it brings more problems than it solves
     - registration page working as intended, not completely done aesthetics wise
     - profile page began but incomplete
+
+bogdanS -- 2025-10-28 22:52
+README UPDATES
+* NEW CHANGES:
+    - Changed project name
+    - Added install instructions
+	- Added launch codes
+	- Updated README layout
