@@ -7,7 +7,21 @@
   </head>
 
   <body>
-
+    <form method='POST' action="/register">
+      <p>
+        {{ error }}
+        USERNAME:
+      </p>
+      <input type="text" name="username">
+      <br>
+      <p> PASSWORD: </p>
+      <input type="password" name="password">
+      <br>
+      <p> CONFIRM PASSWORD: </p>
+      <input type="password" name="confirm">
+      <br><br>
+      <input type="submit" name="sub1">
+    </form>
   </body>
 
   <footer>

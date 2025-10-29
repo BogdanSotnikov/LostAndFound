@@ -1,9 +1,11 @@
 import sqlite3
+import random
 from flask import Flask, render_template
 from flask import session, request, redirect
 
 # Flask
 app = Flask(__name__)
+app.secret_key = 'supersecret'
 
 # SQLite
 DB_FILE = "data.db"
@@ -11,13 +13,21 @@ DB_FILE = "data.db"
 db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 c = db.cursor()
 
-c.execute("CREATE TABLE IF NOT EXIST user_base(username TEXT, password TEXT, pfp TEXT, path TEXT, contributions TEXT, times_cont INTEGER);")
-c.execute("CREATE TABLE IF NOT EXIST story_base(path TEXT, title TEXT, content TEXT, last_entry TEXT, editors TEXT, author INTEGER);")
+c.execute("CREATE TABLE IF NOT EXISTS user_base(username TEXT, password TEXT, pfp TEXT, path TEXT, contributions TEXT, times_cont INTEGER);")
+c.execute("CREATE TABLE IF NOT EXISTS story_base(path TEXT, title TEXT, content TEXT, last_entry TEXT, editors TEXT, author INTEGER);")
+
+db.commit()
+db.close()
+
+# VARIABLES
+pfps = []
 
 # HTML PAGES
 # LANDING PAGE
 @app.route('/')
 def homepage():
+    if request.method == 'POST':
+        session['u_rowid'] = request.form['u_rowid']
     return authenticate("landing.html")
 
 # USER INTERACTIONS
@@ -25,12 +35,18 @@ def homepage():
 def login():
     return authenticate("login.html")
 
-@app.route('/register')
+@app.route('/register', methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        if not request.form['password'] == request.form['confirm']: return render_template("register.html", error="Passwords do not match, please try again! <br><br>")
+        if not create_user(request.form['username'], request.form['password']): return render_template("register.html", error="Username already taken, please try again! <br><br>")
+        else: return redirect("/login")
     return authenticate("register.html")
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
+    #session['u_rowid'] = 1 # temp for testing
+    #session.pop('u_rowid')
     return authenticate("profile.html")
 
 #STORY INTERACTIONS
@@ -70,23 +86,26 @@ def check_existence(table, s_rowid):
             return str(s_rowid) in split(c.fetchall()[0], ',')
 
 def create_user(username, password):
-    c.execute(f"SELECT {username} FROM user_base")
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute("SELECT username FROM user_base")
     if not username in c.fetchall():
         # creates user in table
+        #pfp = random.choice(pfps)
         pfp = "temp"
         contributions = ""
         times_cont = 0
-        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', temp, \'{contributions}\', {times_cont},)")
+        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', 'temp', \'{contributions}\', {times_cont})")
 
         # set path
-        c.execute(f"SELECT rowid FROM user_base WHERE username={username}")
-        c.execute(f"UPDATE user_base SET path = '/profile/{c.fetchall()[0]}' WHERE username={username}")
+        c.execute(f"SELECT rowid FROM user_base WHERE username=\'{username}\'")
+        c.execute(f"UPDATE user_base SET path = '/profile/{c.fetchall()[0][0]}' WHERE username=\'{username}\'")
+        db.commit()
+        db.close()
         return True
+    db.commit()
+    db.close()
     return False
-
-# SQLite
-db.commit()
-db.close()
 
 # Flask
 if __name__=='__main__':
