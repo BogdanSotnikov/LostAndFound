@@ -20,13 +20,14 @@ db.commit()
 db.close()
 
 # VARIABLES
-pfps = []
+pfps = ["pfp1.jpg","pfp2.jpg","pfp3.jpg","pfp4.jpg","pfp5.jpg","pfp6.jpg","pfp7.jpg","pfp8.jpg","pfp9.jpg",]
 
 # HTML PAGES
 # LANDING PAGE
 @app.route('/')
 def homepage():
-    if not 'u_rowid' in session: return redirect("/login")
+    if not 'u_rowid' in session:
+        return redirect("/login")
     if request.method == 'POST':
         session['u_rowid'] = request.form['u_rowid']
     return render_template("landing.html")
@@ -34,61 +35,104 @@ def homepage():
 # USER INTERACTIONS
 @app.route('/login')
 def login():
-    if 'u_rowid' in session: return redirect("/")
+    if 'u_rowid' in session:
+        return redirect("/")
     return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    if 'u_rowid' in session: return redirect("/")
+    if 'u_rowid' in session:
+        return redirect("/")
     if request.method == "POST":
-        if not request.form['password'] == request.form['confirm']: return render_template("register.html", error="Passwords do not match, please try again! <br><br>")
-        if not create_user(request.form['username'], request.form['password']): return render_template("register.html", error="Username already taken, please try again! <br><br>")
-        else: return redirect("/login")
+        if not request.form['password'] == request.form['confirm']:
+            return render_template("register.html", error="Passwords do not match, please try again! <br><br>")
+        if not create_user(request.form['username'], request.form['password']):
+            return render_template("register.html", error="Username already taken, please try again! <br><br>")
+        else:
+            return redirect("/login")
     return render_template("register.html")
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
-    session[u_rowid] = 1
-    if not 'u_rowid' in session and 'u_rowid' == u_rowid: return redirect("/login")
-    u_data = fetch('user_base', u_rowid, 'username,times_cont,contributions', "")[0]
-    return render_template("profile.html", username=u_data[0], times_cont=u_data[1])
+    session[u_rowid] = 1 # for testing
+    if not 'u_rowid' in session and 'u_rowid' == u_rowid:
+        return redirect("/login")
+    u_data = fetch('user_base', u_rowid, 'username, pfp, times_cont, contributions', "")[0]
+
+    # sets badge/title
+    if u_data[2] < 5:
+        badge = "Newbie"
+    elif u_data[2] < 10:
+        badge = "Active Contributor"
+    else:
+        badge = "Top Contributor"
+
+    # renders page
+    if len(u_data[3]) > 0:
+        conts = []
+        for story in u_data[3].split(','):
+            conts.append(fetch('story_base', story, 'title, path', "")[0])
+        return render_template("profile.html",
+            username=u_data[0],
+             pfp=u_data[1],
+             badge=badge,
+             times_cont=u_data[2],
+             contributions=conts)
+    else:
+        return render_template("profile.html",
+            username=u_data[0],
+            pfp=u_data[1],
+            badge=badge,
+            times_cont=u_data[2],
+            if_conts="No contributions yet.")
 
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def story(s_rowid):
-    if not 'u_rowid' in session: return redirect("/login")
+    if not 'u_rowid' in session:
+        return redirect("/login")
     return render_template("story.html")
 
 @app.route('/edit/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def edit(s_rowid):
-    if not 'u_rowid' in session: return redirect("/login")
+    if not 'u_rowid' in session:
+        return redirect("/login")
     return render_template("edit.html")
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def author(u_rowid):
-    if not 'u_rowid' in session: return redirect("/login")
+    if not 'u_rowid' in session:
+        return redirect("/login")
     return render_template("author.html")
 
 # HELPER FUNCTIONS
 def fetch(table, rowid, data, criteria):
     db = sqlite3.connect(DB_FILE)
-    cu = db.cursor()
-
+    c = db.cursor()
     query = f"SELECT {data} FROM {table} WHERE ROWID={rowid}"
-    for c in criteria.split("&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
-        if not c == "": query += f" AND {c}"
+    for cri in criteria.split("&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
+        if not cri == "":
+            query += f" AND {cri}"
     query+=";"
-    cu.execute(query)
-
-    return cu.fetchall()
+    c.execute(query)
+    data = c.fetchall()
+    db.commit()
+    db.close()
+    return data
 
 def check_existence(table, s_rowid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
     if 'u_rowid' in session:
         if table == story_base:
             c.execute(f"SELECT editors FROM story_base WHERE ROWID={s_rowid};")
+            db.commit()
+            db.close()
             return str(session['u_rowid']) in c.fetchall()[0].split(',')
         else:
             c.execute(f"SELECT contributions FROM user_base WHERE ROWID={session['u_rowid']};")
+            db.commit()
+            db.close()
             return str(s_rowid) in c.fetchall()[0].split(',')
 
 def create_user(username, password):
@@ -97,11 +141,10 @@ def create_user(username, password):
     c.execute("SELECT username FROM user_base")
     if not username in c.fetchall():
         # creates user in table
-        #pfp = random.choice(pfps)
-        pfp = "temp"
+        pfp = random.choice(pfps)
         contributions = ""
         times_cont = 0
-        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', 'temp', \'{contributions}\', {times_cont})")
+        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'/static/{pfp}\', 'temp', \'{contributions}\', {times_cont})")
 
         # set path
         c.execute(f"SELECT rowid FROM user_base WHERE username=\'{username}\'")

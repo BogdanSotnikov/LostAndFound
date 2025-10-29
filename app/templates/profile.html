@@ -8,19 +8,20 @@
 
   <body>
     <button onclick="location.href='/'"class="back">&#8592;</button>
-    <!-- pfp -->
-    <p> {{ username }} <br>
-      {{ badge }}
-      {{ times_cont }}
-    </p> <br>
+    <br><br>
+    <img src={{ pfp }} alt="pfp">
+    <h1> {{ username }} </h1>
+    <p>
+      {{ badge }} <br>
+      Times Contributed: {{ times_cont }} <br>
+    </p>
+    <h3> Contributions </h3>
+    <p> {{ if_conts }} </p>
     <ul>
       {% for story in contributions %}
-        <li> {{ story }} </li>
+        <li> <a href={{ story[1] }}> {{ story[0] }} </a></li>
       {% endfor %}
     </ul>
-    <!--a contributor badge if they have one
-      times contributed
-      contributions list (all should be urls)-->
   </body>
 
   <footer>
