@@ -29,28 +29,28 @@ INITIAL DD SUBMISSION
 joyceL -- 2025-10-23 22:11
 INITIAL DD REVIEW
 * SUMMARY OF PEER REVIEW:
-    - Suggestions were given regarding way we should do things as well as comments about our organization of 
+    - Suggestions were given regarding way we should do things as well as comments about our organization of
 	data. The following comments/suggestions were deemed the most useful, followed by our solution:
 		- Site map included a USERS box which would lead to confusion (team deck) -- should delete for clarity
-		- SQLite does not allow for the storage of lists within tables (team deck) -- will be changed to strings that 
-		are then split at commas 
-		- Specific comments about what was wrong during login process would pose security issue (team carrots) -- will 
+		- SQLite does not allow for the storage of lists within tables (team deck) -- will be changed to strings that
+		are then split at commas
+		- Specific comments about what was wrong during login process would pose security issue (team carrots) -- will
 		combine username and password message
-		- Logout page could be omitted (team carrots) -- this page will instead be considered as something 'extra', 
+		- Logout page could be omitted (team carrots) -- this page will instead be considered as something 'extra',
 		done after MVP as produced
 		- Maintain navbar consistency along with any intentional differences (team carrots) -- duly noted
 		- Site map should include specification of authentication prereqs regarding access to pages such as the login
 		page (team carrots) -- will attempt to make site map more clear, either with comments or better arrow placements
 	- In addition to these suggestions, we had received compliments in regards to any potential extra features as well as
-	thorough explanations. 
+	thorough explanations.
 
 naomiK -- 2025-10-26 21:20
 DD PIVOT
 * NEW CHANGES:
     - Chose sigma option
     - Now using rowid to help with selecting from data
-	- Can now only edit webpage once 
-	- Updated back/front-end components of component map 
+	- Can now only edit webpage once
+	- Updated back/front-end components of component map
 	- Updated component relationships to reflect new scenario
 	- Added string of editer stories to user base
 
@@ -61,5 +61,14 @@ DD REVISION
 	- Expected delivery column added to task tables
 	- New methods added (subject to change)
 	- Database organization updated to better reflect assignment reqs
-	- Component map colors updated for greater clarity 
-    
+	- Component map colors updated for greater clarity
+
+joyceL -- 2025-10-28 22:16
+PRELIM CODING
+* NEW CHANGES:
+    - Skeleton for html pages were added (veryyyyy basic skeleton)
+    - Functional app established
+    - Helper methods added (not all tested)
+      - authenticate() has been dropped as it brings more problems than it solves
+    - registration page working as intended, not completely done aesthetics wise
+    - profile page began but incomplete
