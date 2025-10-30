@@ -6,8 +6,25 @@
 
   </head>
 
+  <h1>
+    Login 
+  </h1>
+
   <body>
-    this is the login page
+    <p> Please put your username and password below: </p>
+
+    <form method='POST' action="/login">
+      <p>
+        {{ error }}
+        USERNAME:
+      </p>
+      <input type="text" name="username">
+      <br>
+      <p> PASSWORD: </p>
+      <input type="password" name="password">
+      <br><br>
+      <input type="submit" name="sub1" value="Submit">
+    </form>
   </body>
 
   <footer>
