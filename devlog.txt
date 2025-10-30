@@ -87,3 +87,11 @@ PROFILE STUFF
     - made minor design changes to register page
     - completed basic profile page
     - added profile pictures
+
+bogdanS -- 2025-10-30 11:39
+LOGIN STUFF
+* NEW CHANGES:
+    - fixed login
+    - changed fetch method to work with finding rowid
+    - simplified profile picture stuff
+    - made code more readable

@@ -20,7 +20,7 @@ db.commit()
 db.close()
 
 # VARIABLES
-pfps = ["pfp1.jpg","pfp2.jpg","pfp3.jpg","pfp4.jpg","pfp5.jpg","pfp6.jpg","pfp7.jpg","pfp8.jpg","pfp9.jpg",]
+pfps = [f"pfp{i}.jpg" for i in range(1,10)]
 
 # HTML PAGES
 # LANDING PAGE
@@ -33,10 +33,14 @@ def homepage():
     return render_template("landing.html")
 
 # USER INTERACTIONS
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
     if 'u_rowid' in session:
         return redirect("/")
+    if request.method == 'POST':
+        session["u_rowid"] = fetch("user_base",
+                                   f"username = \"{request.form['username']}\"",
+                                   "rowid")[0]
     return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
@@ -45,20 +49,23 @@ def register():
         return redirect("/")
     if request.method == "POST":
         if not request.form['password'] == request.form['confirm']:
-            return render_template("register.html", error="Passwords do not match, please try again! <br><br>")
+            return render_template("register.html",
+                                   error="Passwords do not match, please try again! <br><br>")
         if not create_user(request.form['username'], request.form['password']):
-            return render_template("register.html", error="Username already taken, please try again! <br><br>")
+            return render_template("register.html",
+                                   error="Username already taken, please try again! <br><br>")
         else:
             return redirect("/login")
     return render_template("register.html")
 
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
-    session[u_rowid] = 1 # for testing
     # session.clear()
     if not 'u_rowid' in session and session['u_rowid'] == u_rowid:
         return redirect("/login")
-    u_data = fetch('user_base', u_rowid, 'username, pfp, times_cont, contributions', "")[0]
+    u_data = fetch('user_base',
+                   f"rowid = {u_rowid}",
+                   'username, pfp, times_cont, contributions')[0]
 
     # sets badge/title
     if u_data[2] < 5:
@@ -72,7 +79,7 @@ def profile(u_rowid):
     if len(u_data[3]) > 0:
         conts = []
         for story in u_data[3].split(','):
-            conts.append(fetch('story_base', story, 'title, path', "")[0])
+            conts.append(fetch('story_base', f"rowid = {story}", 'title, path')[0])
         return render_template("profile.html",
             username=u_data[0],
              pfp=u_data[1],
@@ -107,14 +114,10 @@ def author(u_rowid):
     return render_template("author.html")
 
 # HELPER FUNCTIONS
-def fetch(table, rowid, data, criteria):
+def fetch(table, criteria, data='*'):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    query = f"SELECT {data} FROM {table} WHERE ROWID={rowid}"
-    for cri in criteria.split("&"): # IF MULTIPLE CRITERIA, THEY WILL BE SPLIT WITH A '&' CHARACTER
-        if not cri == "":
-            query += f" AND {cri}"
-    query+=";"
+    query = f"SELECT {data} FROM {table} WHERE {criteria};"
     c.execute(query)
     data = c.fetchall()
     db.commit()
