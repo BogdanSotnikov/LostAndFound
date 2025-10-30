@@ -10,7 +10,7 @@
     <button onclick="location.href='/'"class="back">&#8592;</button>
     <form method='POST' action="/register">
       <p>
-        {{ error }}
+        {{ error|safe }}
         USERNAME:
       </p>
       <input type="text" name="username">

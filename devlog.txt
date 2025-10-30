@@ -95,3 +95,14 @@ LOGIN STUFF
     - changed fetch method to work with finding rowid
     - simplified profile picture stuff
     - made code more readable
+
+naomiK -- 2025-10-30 18:39
+LOGIN STUFF
+* NEW CHANGES:
+    - added logout button on landing page
+    - added register button for login page
+    - updated login method to check for correct username/password
+    - added |safe to jinja template expressions
+* ERRORS/BUGS:
+	- without checking username/password in login, an incorrect entry would\n
+	result in errors (now renders login template with error message)
