@@ -15,7 +15,7 @@
 
     <form method='POST' action="/login">
       <p>
-        {{ error }}
+        {{ error|safe }}
         USERNAME:
       </p>
       <input type="text" name="username">
@@ -24,6 +24,10 @@
       <input type="password" name="password">
       <br><br>
       <input type="submit" name="sub1" value="Submit">
+    </form>
+
+    <form action="/register">
+      <button type="submit">Register</button>
     </form>
   </body>
 
