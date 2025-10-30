@@ -104,5 +104,5 @@ LOGIN STUFF
     - updated login method to check for correct username/password
     - added |safe to jinja template expressions
 * ERRORS/BUGS:
-	- without checking username/password in login, an incorrect entry would\n
+	- without checking username/password in login, an incorrect entry would
 	result in errors (now renders login template with error message)
