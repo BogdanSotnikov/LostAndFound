@@ -55,7 +55,8 @@ def register():
 @app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
     session[u_rowid] = 1 # for testing
-    if not 'u_rowid' in session and 'u_rowid' == u_rowid:
+    # session.clear()
+    if not 'u_rowid' in session and session['u_rowid'] == u_rowid:
         return redirect("/login")
     u_data = fetch('user_base', u_rowid, 'username, pfp, times_cont, contributions', "")[0]
 

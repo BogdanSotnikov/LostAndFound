@@ -80,3 +80,10 @@ README UPDATES
     - Added install instructions
 	- Added launch codes
 	- Updated README layout
+
+joyceL -- 2025-10-29 20:29
+PROFILE STUFF
+* NEW CHANGES:
+    - made minor design changes to register page
+    - completed basic profile page
+    - added profile pictures
