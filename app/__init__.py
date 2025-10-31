@@ -71,6 +71,10 @@ def register():
             return redirect("/login")
     return render_template("register.html")
 
+@app.route('/profile', methods=["GET", "POST"])
+def profileDefault():
+    return redirect(f"/profile/{session['u_rowid'][0]}");
+
 @app.route('/profile/<u_rowid>', methods=["GET", "POST"]) # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
     # session.clear()
@@ -88,10 +92,15 @@ def profile(u_rowid):
         else:
             edit = f"<form method='POST' action={u_rowid}>"
             for pfp in pfps:
-                edit += f"<button type='submit' name='pfp' value={pfp}> <img src={pfp} alt='profile choice'> </button>"
+                edit += f"""<button type='submit' name='pfp' value={pfp}>
+                <img src={pfp} alt='profile choice'>
+                </button>"""
             edit += "</form>"
     else:
-        edit = f"<form method='POST' action={u_rowid}> <input type='hidden' name='hidden'> <input value='Change PFP' type='submit' name='sub1'> </form>"
+        edit = f"""<form method='POST' action={u_rowid}>
+        <input type='hidden' name='hidden'>
+        <input value='Change PFP' type='submit' name='sub1'>
+        </form>"""
 
     # sets badge/title
     if u_data[2] < 5:
