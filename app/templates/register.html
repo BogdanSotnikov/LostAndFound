@@ -9,6 +9,7 @@
   <body>
     <button onclick="location.href='/'"class="back">&#8592;</button>
     <form method='POST' action="/register">
+      <h1> Create an Account </h1>
       <p>
         {{ error|safe }}
         USERNAME:
@@ -21,7 +22,7 @@
       <p> CONFIRM PASSWORD: </p>
       <input type="password" name="confirm">
       <br><br>
-      <input type="submit" value="Create Account" name="sub1">
+      <input type="submit" value="Register" name="sub1">
     </form>
   </body>
 

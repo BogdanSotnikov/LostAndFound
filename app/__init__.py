@@ -20,7 +20,7 @@ db.commit()
 db.close()
 
 # VARIABLES
-pfps = [f"pfp{i}.jpg" for i in range(1,10)]
+pfps = [f"/static/pfp{i}.jpg" for i in range(1,13)]
 
 # HTML PAGES
 # LANDING PAGE
@@ -40,10 +40,10 @@ def login():
         if not request.form['username'] in usernames:
             return render_template("login.html", error="Wrong username or password!<br><br>")
         else:
-            if request.form['password'] != fetch("user_base", 
-                                f"username = \"{request.form['username']}\"", 
+            if request.form['password'] != fetch("user_base",
+                                f"username = \"{request.form['username']}\"",
                                 "password")[0][0]:
-                return render_template("login.html", error="Wrong username or password!<br><br>")   
+                return render_template("login.html", error="Wrong username or password!<br><br>")
         session["u_rowid"] = fetch("user_base",
                                 f"username = \"{request.form['username']}\"",
                                 "rowid")[0]
@@ -71,14 +71,27 @@ def register():
             return redirect("/login")
     return render_template("register.html")
 
-@app.route('/profile/<u_rowid>') # makes u_rowid a variable that is passed to the function
+@app.route('/profile/<u_rowid>', methods=["GET", "POST"]) # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
     # session.clear()
     if not 'u_rowid' in session and session['u_rowid'] == u_rowid:
         return redirect("/login")
     u_data = fetch('user_base',
-                   f"rowid = {u_rowid}",
+                   f"ROWID={u_rowid}",
                    'username, pfp, times_cont, contributions')[0]
+
+    # pfp editing
+    if request.method=='POST':
+        if 'pfp' in request.form:
+            update_pfp(request.form['pfp'], u_rowid)
+            return redirect(f"/profile/{u_rowid}")
+        else:
+            edit = f"<form method='POST' action={u_rowid}>"
+            for pfp in pfps:
+                edit += f"<button type='submit' name='pfp' value={pfp}> <img src={pfp} alt='profile choice'> </button>"
+            edit += "</form>"
+    else:
+        edit = f"<form method='POST' action={u_rowid}> <input type='hidden' name='hidden'> <input value='Change PFP' type='submit' name='sub1'> </form>"
 
     # sets badge/title
     if u_data[2] < 5:
@@ -95,14 +108,18 @@ def profile(u_rowid):
             conts.append(fetch('story_base', f"rowid = {story}", 'title, path')[0])
         return render_template("profile.html",
             username=u_data[0],
-             pfp=u_data[1],
-             badge=badge,
-             times_cont=u_data[2],
-             contributions=conts)
+            pfp=u_data[1],
+            pfps=pfps,
+            edit=edit,
+            badge=badge,
+            times_cont=u_data[2],
+            contributions=conts)
     else:
         return render_template("profile.html",
             username=u_data[0],
             pfp=u_data[1],
+            pfps=pfps,
+            edit=edit,
             badge=badge,
             times_cont=u_data[2],
             if_conts="No contributions yet.")
@@ -127,7 +144,7 @@ def author(u_rowid):
     return render_template("author.html")
 
 # HELPER FUNCTIONS
-def fetch(table, criteria, data='*'):
+def fetch(table, criteria, data):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     query = f"SELECT {data} FROM {table} WHERE {criteria};"
@@ -161,7 +178,7 @@ def create_user(username, password):
         pfp = random.choice(pfps)
         contributions = ""
         times_cont = 0
-        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'/static/{pfp}\', 'temp', \'{contributions}\', {times_cont})")
+        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', 'temp', \'{contributions}\', {times_cont})")
 
         # set path
         c.execute(f"SELECT rowid FROM user_base WHERE username=\'{username}\'")
@@ -172,6 +189,13 @@ def create_user(username, password):
     db.commit()
     db.close()
     return False
+
+def update_pfp(pfp, u_rowid):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute(f"UPDATE user_base SET pfp = \'{pfp}\' WHERE ROWID=\'{u_rowid}\'")
+    db.commit()
+    db.close()
 
 # Flask
 if __name__=='__main__':

@@ -106,3 +106,10 @@ LOGIN STUFF
 * ERRORS/BUGS:
 	- without checking username/password in login, an incorrect entry would
 	result in errors (now renders login template with error message)
+
+joyceL -- 2025-10-29 20:29
+SELECT PFP
+* NEW CHANGES:
+    - added an update_pfp() method
+    - added an edit pfp option to profile page
+    - added three more pfp options
