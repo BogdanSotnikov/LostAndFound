@@ -113,3 +113,10 @@ SELECT PFP
     - added an update_pfp() method
     - added an edit pfp option to profile page
     - added three more pfp options
+
+bogdanS -- 2025-10-31 11:59
+WORKING
+* NEW CHANGES:
+    - Worked on HTML pages and formatting
+    - Made changes to landing
+    - Adde default profile page
