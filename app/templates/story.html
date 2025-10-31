@@ -6,11 +6,24 @@
 
   </head>
 
+  <nav>
+    <button onclick="location.href='/profile'">My Profile</button>
+    <button onclick="location.href='/logout'">Logout</button>
+  </nav>
+
   <body>
+
+
+    <h1> {{ title }} </h1>
+    {{ content }}
 
   </body>
 
   <footer>
+    <button onclick="location.href='/profile/{{author_id}}'">Author</button>
+    <br>
+    <br>
+    <p>Editors: {{editors}}</p>
 
   </footer>
   
