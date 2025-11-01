@@ -120,3 +120,9 @@ WORKING
     - Worked on HTML pages and formatting
     - Made changes to landing
     - Adde default profile page
+
+joyceL -- 2025-11-1 16:11
+CSS FOR PROFILE
+* NEW CHANGES:
+    - added classes, ids, and divs to profile.html
+    - completed a basic css page for profile
