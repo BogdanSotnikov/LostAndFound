@@ -90,16 +90,16 @@ def profile(u_rowid):
             update_pfp(request.form['pfp'], u_rowid)
             return redirect(f"/profile/{u_rowid}")
         else:
-            edit = f"<form method='POST' action={u_rowid}>"
+            edit = f"<form method='POST' action={u_rowid} id='PFPform'>"
             for pfp in pfps:
-                edit += f"""<button type='submit' name='pfp' value={pfp}>
-                <img src={pfp} alt='profile choice'>
+                edit += f"""<button type='submit' name='pfp' class='ibutton' value={pfp}>
+                <img src={pfp} alt='profile choice' class='image'>
                 </button>"""
             edit += "</form>"
     else:
         edit = f"""<form method='POST' action={u_rowid}>
         <input type='hidden' name='hidden'>
-        <input value='Change PFP' type='submit' name='sub1'>
+        <input type='Image' src='/static/edit.png' name='Change PFP'>
         </form>"""
 
     # sets badge/title

@@ -1,0 +1,93 @@
+@font-face {
+  font-family: font;
+  src: url(arcadeclassic.regular.ttf);
+}
+
+html, body {
+  font-family: font;
+  margin: 0;
+  padding: 0;
+  background-color: #D4354A;
+
+  /* turns body into a flex container and aligns everything vertically */
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAVBAR */
+nav {
+  background-color: #4F6D3A;
+  padding: 0.75%;
+}
+
+button {
+  font-family: font;
+  font-size: 150%;
+  border: none;
+  background-color: transparent;
+  color: #8CB360;
+}
+
+.back {
+  font-weight: 900;
+}
+
+.logout {
+  float: right;
+}
+
+/* PFP */
+.PFP {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 1%;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  background-color: #EC4653;
+
+  /* sets position for this part of the page */
+  align-self: center;
+  width: 95%;
+}
+
+#pic {
+  display: flex;
+  justify-content: center;
+  width: 250px;
+}
+
+#edit {
+  display: flex;
+  justify-content: left;
+  width: 1300px;
+  padding: 0.5%;
+}
+
+#PFPform { /* turns the form into a flex container */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ibutton {
+  width: 5em; /* em allows for the items to adjust accordingly to font-size which makes it more suitable for wrapping */
+  height: auto;
+}
+
+.image {
+  width: 100%;
+  max-height: auto;
+}
+
+/* MAIN PROFILE CONTENT */
+.main {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 1%;
+  padding-top: 0;
+  margin-top: 0;
+  background-color: #EC4653;
+
+  /* sets position for this part of the page */
+  align-self: center;
+  width: 95%;
+}

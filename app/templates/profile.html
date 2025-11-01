@@ -2,27 +2,45 @@
 
 <html>
 
+  <head>
+    <link rel="stylesheet"
+      type="text/css"
+      href="/static/profile.css">
+  </head>
+
   <nav>
-    <button onclick="location.href='/'"class="back">&#8592;</button>
-    <button onclick="location.href='/logout'">Logout</button>
+    <button onclick="location.href='/'" class="back">&#8592;</button>
+    <button onclick="location.href='/logout'" class="logout">Logout</button>
   </nav>
 
   <body>
+
     <br><br>
-    <img src={{ pfp }} alt="pfp">
-    {{ edit | safe }}
-    <h1> {{ username }} </h1>
-    <p>
-      {{ badge }} <br>
-      Times Contributed: {{ times_cont }} <br>
-    </p>
-    <h3> Contributions </h3>
-    <p> {{ if_conts }} </p>
-    <ul>
-      {% for story in contributions %}
-        <li> <a href={{ story[1] }}> {{ story[0] }} </a></li>
-      {% endfor %}
-    </ul>
+    <div class='PFP'>
+      <div id='pic'>
+        <img src={{ pfp }} alt="pfp" class='image'>
+      </div>
+
+      <div id='edit'>
+        {{ edit | safe }}
+      </div>
+    </div>
+
+    <div class='main'>
+      <h1> {{ username }} </h1>
+      <p>
+        {{ badge }} <br>
+        Times Contributed: {{ times_cont }}
+      </p>
+      <h3> Contributions </h3>
+      <p> {{ if_conts }} </p>
+      <ul>
+        {% for story in contributions %}
+          <li> <a href={{ story[1] }}> {{ story[0] }} </a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
   </body>
 
   <footer>
