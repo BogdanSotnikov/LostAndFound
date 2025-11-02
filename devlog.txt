@@ -126,3 +126,10 @@ CSS FOR PROFILE
 * NEW CHANGES:
     - added classes, ids, and divs to profile.html
     - completed a basic css page for profile
+
+joyceL -- 2025-11-2 18:33
+CSS FOR LOGIN
+* NEW CHANGES:
+    - added ids and divs to login.html
+    - completed a basic css page for login
+    - added strawb.jpg to work as background-image

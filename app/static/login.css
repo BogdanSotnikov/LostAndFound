@@ -1,0 +1,46 @@
+@font-face {
+  font-family: font;
+  src: url(arcadeclassic.regular.ttf);
+}
+
+html, body {
+  font-family: font;
+  margin: 0;
+  padding: 0;
+  background-image: url(/static/strawb.jpg);
+
+  /* turns body into a flex container and aligns everything vertically */
+  display: flex;
+  flex-direction: column;
+}
+
+/* header */
+h1 {
+  margin-top: 0;
+  background-color: #4F6D3A;
+  color: #8CB360;
+
+  text-align: center;
+  padding: 0.75%;
+}
+
+/* MAIN CONTENT */
+#main {
+  background-color: #EC4653;
+  padding: 1%;
+  padding-top: 0;
+  align-self: center;
+  width: 95%;
+  height: 70vh; /* 70 viewport height -- scales height with size of window */
+}
+
+#prompt {
+  font-size: 145%;
+}
+
+button, #sub1 {
+  font-family: font;
+  font-size: 115%;
+  border-color: black;
+  background-color: transparent;
+}

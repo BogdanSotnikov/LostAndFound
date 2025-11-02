@@ -7,7 +7,7 @@ html, body {
   font-family: font;
   margin: 0;
   padding: 0;
-  background-color: #D4354A;
+  background-image: url(/static/strawb.jpg);
 
   /* turns body into a flex container and aligns everything vertically */
   display: flex;
