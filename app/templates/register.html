@@ -3,27 +3,54 @@
 <html>
 
   <head>
-
+    <link rel="stylesheet"
+    type="text/css"
+    href="/static/register.css">
   </head>
 
-  <body>
+  <nav>
     <button onclick="location.href='/'"class="back">&#8592;</button>
-    <form method='POST' action="/register">
-      <h1> Create an Account </h1>
-      <p>
-        {{ error|safe }}
-        USERNAME:
-      </p>
-      <input type="text" name="username">
-      <br>
-      <p> PASSWORD: </p>
-      <input type="password" name="password">
-      <br>
-      <p> CONFIRM PASSWORD: </p>
-      <input type="password" name="confirm">
-      <br><br>
-      <input type="submit" value="Register" name="sub1">
-    </form>
+  </nav>
+
+  <body>
+    <div class="birdies">
+      <div class="bird1">
+        <div class="wing"></div>
+        <div class="body"></div>
+        <div class="head"></div>
+      </div>
+
+      <div class="bird2">
+        <div class="wing"></div>
+        <div class="body"></div>
+        <div class="head"></div>
+      </div>
+
+      <div class="bird3">
+        <div class="wing"></div>
+        <div class="body"></div>
+        <div class="head"></div>
+      </div>
+    </div>
+
+    <div class="main">
+      <form method='POST' action="/register">
+        <h1> Create an Account </h1>
+        <p>
+          {{ error|safe }}
+          USERNAME:
+        </p>
+        <input type="text" name="username">
+        <br>
+        <p> PASSWORD: </p>
+        <input type="password" name="password">
+        <br>
+        <p> CONFIRM PASSWORD: </p>
+        <input type="password" name="confirm">
+        <br><br>
+        <input type="submit" value="Register" name="sub1">
+      </form>
+    </div>
   </body>
 
   <footer>
