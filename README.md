@@ -10,12 +10,6 @@ In this fun story game, you will collaborate with other users to create **beauti
 
 ## Install guide:
 
-### Install prerequisites:
-
-flask, python 3
-* Flask
-* Python 3+
-
 ### Step 1:
 
 run this in your terminal:
