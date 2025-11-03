@@ -133,3 +133,11 @@ CSS FOR LOGIN
     - added ids and divs to login.html
     - completed a basic css page for login
     - added strawb.jpg to work as background-image
+
+naomiK -- 2025-11-2 23:30
+CSS FOR REGISTER
+* NEW CHANGES:
+    - added classes and new elements to register html
+    - added navbar to register page
+    - added animation and styling to register.css
+    - added strawb2.jpg to static folder for background image (faded in css file)
