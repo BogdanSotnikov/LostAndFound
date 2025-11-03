@@ -22,6 +22,8 @@ run this in your terminal:
 
 ```
 git clone git@github.com:BogdanSotnikov/LostAndFound.git
+cd LostAndFound
+pip install -r requirements.txt
 ```
 
 ### Step 2:
@@ -33,8 +35,7 @@ you are done
 now run this:
 
 ```
-cd LostAndFound/app
-pip install -r requirements.txt
+cd app
 python __init__.py
 ```
 
