@@ -7,7 +7,7 @@ html, body {
   font-family: font;
   margin: 0;
   padding: 0;
-  background-image: url(/static/strawb.jpg);
+  background-color: #4F6D3A;
 
   /* turns body into a flex container and aligns everything vertically */
   display: flex;
@@ -15,27 +15,44 @@ html, body {
 }
 
 /* header */
-h1 {
-  margin-top: 0;
-  background-color: #4F6D3A;
-  color: #8CB360;
+#head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
+  height: 10vh;
+  background-image: url(leaf.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+h1 {
+  color: #8CB360;
+  font-size: 180%;
   text-align: center;
-  padding: 0.75%;
+  padding-top: 2%;
 }
 
 /* MAIN CONTENT */
 #main {
-  background-color: #EC4653;
+  display: flex;
   padding: 1%;
-  padding-top: 0;
+  padding-top: 10%;
   align-self: center;
-  width: 95%;
-  height: 70vh; /* 70 viewport height -- scales height with size of window */
+
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #CD4150;
+  width: 100vw;
+  height: 100vh;
+
+  border-radius: 20vw 20vw 0 0;
 }
 
 #prompt {
-  font-size: 145%;
+  font-size: 135%;
 }
 
 button, #sub1 {
@@ -43,4 +60,8 @@ button, #sub1 {
   font-size: 115%;
   border-color: black;
   background-color: transparent;
+}
+
+button {
+  width: 6em;
 }
