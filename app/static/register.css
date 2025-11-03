@@ -1,0 +1,143 @@
+@font-face {
+    font-family: font;
+    src: url(arcadeclassic.regular.ttf);
+  }
+
+/* NAVBAR */
+nav {
+    background-color: #4F6D3A;
+    padding: 0.75%;
+}
+
+html, body {
+    font-family: font;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('strawb2.jpg');
+    /* turns body into a flex container and aligns everything vertically */
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+}
+
+.main {
+    display: flex;
+    padding: 1%;
+    padding-top: 10%;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 20vw 20vw 0 0;
+}
+
+/* assigning animation for div elements */ 
+.bird1, .bird2, .bird3 { 
+    position: absolute;
+    transform: translate(-10vw, 15vh);
+    animation: fly 8s linear infinite; 
+} 
+
+.bird2 { animation-duration: 6s; animation-delay: 1s; }
+.bird3 { animation-duration: 7s; animation-delay: 2s; }
+/* shape of div elements (birds) */ 
+
+.birdies {
+    position: relative;
+    width: 100vw;
+    height: 10vh;
+}
+
+.body { width: 22px; 
+    height: 5px; 
+    border-top: 10px solid black; 
+    border-left: 11px solid transparent; 
+    border-right: 13px solid transparent; 
+    position: relative; 
+} 
+    
+.head { 
+    width: 0; 
+    height: 0; 
+    border-top: 7px solid transparent; 
+    border-left: 15px solid black; 
+    border-bottom: 7px solid transparent; 
+    border-radius: 60%; 
+    position: relative; 
+    transform: translate(35px, -23px);
+} 
+    
+.wing {
+    width: 14px; 
+    height: 6px; 
+    top: 10px;
+    left: 5px;
+    border-top: 8px solid black; 
+    border-left: 10px solid transparent; 
+    border-right: 3px solid transparent; 
+    position: relative; 
+    animation: birdWing 6s linear infinite;
+} 
+
+    
+/* bird animation steps */ 
+
+
+    
+@keyframes birdWing { 
+    0% {
+        transform: rotate(50deg);
+    } 
+    10% {
+        transform: rotate(-40deg);
+    } 
+    20% {
+        transform: rotate(50deg);
+    } 
+    50% {
+        transform: rotate(-40deg);
+    } 
+    60% {
+        transform: rotate(50deg);
+    } 
+    70% {
+        transform: rotate(-40deg);
+    } 
+    80% {
+        transform: rotate(50deg);
+    } 
+    100% {
+       transform: rotate(-40deg);
+    } 
+}
+
+@keyframes fly {
+    0% {
+        transform: translate(-20vw, 20vh);
+    }
+    25% {
+        transform: translate(20vw, 5vh);
+    }
+    50% {
+        transform: translate(50vw, 15vh);
+    }
+    75% {
+        transform: translate(80vw, 30vh);
+    }
+    100% {
+        transform: translate(110vw, 0);
+    }
+}
+
+
+
+
