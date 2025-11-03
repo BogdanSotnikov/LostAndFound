@@ -37,14 +37,14 @@ def homepage():
 def login():
     if request.method == 'POST':
         usernames = [row[0] for row in fetch("user_base", "TRUE", "username")]
-        if not request.form['username'] in usernames:
+        if not request.form['username'] in usernames or len(request.form['username']) < 1:
             return render_template("login.html", error="Wrong username or password!<br><br>")
-        else:
-            if request.form['password'] != fetch("user_base",
+        elif request.form['password'] != fetch("user_base",
                                 f"username = \"{request.form['username']}\"",
                                 "password")[0][0]:
                 return render_template("login.html", error="Wrong username or password!<br><br>")
-        session["u_rowid"] = fetch("user_base",
+        else:
+            session["u_rowid"] = fetch("user_base",
                                 f"username = \"{request.form['username']}\"",
                                 "rowid")[0]
     if 'u_rowid' in session:
