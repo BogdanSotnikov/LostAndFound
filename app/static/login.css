@@ -30,9 +30,10 @@ html, body {
 
 h1 {
   color: #8CB360;
-  font-size: 180%;
+  font-size: 6vh;
   text-align: center;
-  padding-top: 2%;
+  padding-top: 8vh;
+  padding-left: 3%;
 }
 
 /* MAIN CONTENT */
@@ -40,14 +41,15 @@ h1 {
   display: flex;
   align-self: center;
 
-  flex-direction: row  ;
+  flex-direction: row;
   align-items: center;
   text-align: center;
   background-color: #B23C4B;
   width: 95vw;
-  height: 90vh;
+  height: 80vh;
 
   border-radius: 20vw 20vw 0 0;
+  border-left: 25px solid transparent;
 }
 
 /* LEFT AND RIGHT SEEDS */
@@ -71,7 +73,7 @@ h1 {
 }
 
 #prompt {
-  font-size: 135%;
+  font-size: 4vh;
 }
 
 button, #sub1 {
