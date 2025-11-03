@@ -16,22 +16,32 @@
     </div>
 
     <div id="main">
-      <p id="prompt"> Please &nbsp enter &nbsp your &nbsp username &nbsp and &nbsp password &nbsp below: </p>
+      <div id="left">
+        <image src='/static/left_seed.png' alt="left seed">
+      </div>
 
-      <form method='POST' action="/login">
-        <p>
-          {{ error|safe }}
-          USERNAME:
-        </p>
-        <input type="text" name="username">
+      <div id="middle">
+        <p id="prompt"> Please &nbsp enter &nbsp your &nbsp username &nbsp and &nbsp password &nbsp below: </p>
+
+        <form method='POST' action="/login">
+          <p>
+            {{ error|safe }}
+            USERNAME:
+          </p>
+          <input type="text" name="username">
+          <br>
+          <p> PASSWORD: </p>
+          <input type="password" name="password">
+          <br><br>
+          <input type="submit" name="sub1" id="sub1" value="Submit">
+        </form>
         <br>
-        <p> PASSWORD: </p>
-        <input type="password" name="password">
-        <br><br>
-        <input type="submit" name="sub1" id="sub1" value="Submit">
-      </form>
-      <br>
-      <button onclick="location.href='/register'">Register</button>
+        <button onclick="location.href='/register'">Register</button>
+      </div>
+
+      <div id="right">
+        <image src='/static/right_seed.png' alt="right seed">
+      </div>
     </div>
   </body>
 

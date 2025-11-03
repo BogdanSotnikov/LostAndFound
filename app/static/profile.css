@@ -41,9 +41,10 @@ button {
   display: flex;
   flex-flow: row wrap;
   padding: 1%;
+  margin-top: 4vh;
   padding-bottom: 0;
   margin-bottom: 0;
-  background-color: #EC4653;
+  background-color: #B94F5D;
 
   /* sets position for this part of the page */
   align-self: center;
@@ -85,7 +86,7 @@ button {
   padding: 1%;
   padding-top: 0;
   margin-top: 0;
-  background-color: #EC4653;
+  background-color: #B94F5D;
 
   /* sets position for this part of the page */
   align-self: center;

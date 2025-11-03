@@ -21,7 +21,8 @@ html, body {
   align-items: center;
   justify-content: center;
 
-  height: 10vh;
+  height: 20vh;
+  width: 95%;
   background-image: url(leaf.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -37,18 +38,36 @@ h1 {
 /* MAIN CONTENT */
 #main {
   display: flex;
-  padding: 1%;
-  padding-top: 10%;
   align-self: center;
 
+  flex-direction: row  ;
+  align-items: center;
+  text-align: center;
+  background-color: #B23C4B;
+  width: 95vw;
+  height: 90vh;
+
+  border-radius: 20vw 20vw 0 0;
+}
+
+/* LEFT AND RIGHT SEEDS */
+#left {
+  width: 20%;
+  height: auto;
+}
+
+#right {
+  width: 20%;
+}
+
+/* MIDDLE FORM */
+#middle {
+  display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #CD4150;
-  width: 100vw;
-  height: 100vh;
 
-  border-radius: 20vw 20vw 0 0;
+  width: 60%;
 }
 
 #prompt {
