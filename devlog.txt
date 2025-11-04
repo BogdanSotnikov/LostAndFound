@@ -141,3 +141,9 @@ CSS FOR REGISTER
     - added navbar to register page
     - added animation and styling to register.css
     - added strawb2.jpg to static folder for background image (faded in css file)
+
+joyceL -- 2025-11-3 22:49
+CSS
+* NEW CHANGES:
+    - completed login css
+    - fixed minor issue with create_user
