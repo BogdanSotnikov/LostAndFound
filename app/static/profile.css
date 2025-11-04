@@ -82,7 +82,7 @@ button {
 /* MAIN PROFILE CONTENT */
 .main {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   padding: 1%;
   padding-top: 0;
   margin-top: 0;

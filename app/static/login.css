@@ -55,11 +55,20 @@ h1 {
 /* LEFT AND RIGHT SEEDS */
 #left {
   width: 20%;
-  height: auto;
+}
+
+#lefts {
+  width: 15vw;
+  height: 28vh;
 }
 
 #right {
   width: 20%;
+}
+
+#rights {
+  width: 15vw;
+  height: 28vh;
 }
 
 /* MIDDLE FORM */
@@ -73,7 +82,7 @@ h1 {
 }
 
 #prompt {
-  font-size: 4vh;
+  font-size: clamp(20px, 3.25vh, 3.5vh);
 }
 
 button, #sub1 {
