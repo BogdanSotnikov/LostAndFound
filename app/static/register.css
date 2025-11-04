@@ -30,14 +30,29 @@ h1 {
 .main {
     display: flex;
     padding: 1%;
-    padding-top: 10%;
+    padding-top: 2%;
     align-self: center;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 100vw;
-    height: 100vh;
-    border-radius: 20vw 20vw 0 0;
+    width: 40vw;
+    height: 28em;
+    background-color: #bf5d6c;
+}
+
+button {
+  font-family: font;
+  font-size: 150%;
+  border: none;
+  background-color: transparent;
+  color: #8CB360;
+}
+
+#sub1 {
+  font-family: font;
+  font-size: 115%;
+  border-color: black;
+  background-color: transparent;
 }
 
 /* assigning animation for div elements */ 

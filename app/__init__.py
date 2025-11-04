@@ -182,7 +182,8 @@ def create_user(username, password):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute("SELECT username FROM user_base")
-    if not username in c.fetchall():
+    list = [username[0] for username in c.fetchall()]
+    if not username in list:
         # creates user in table
         pfp = random.choice(pfps)
         contributions = ""
