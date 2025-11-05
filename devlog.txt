@@ -155,3 +155,15 @@ STORY AND EDIT PAGE
     - edit page where user can input text to create/edit pages
     - update_story method saves user changes and adds edits to Database
     - functioning story page, now shows title and content
+
+bogdanS -- 2025-11-4 22:54
+EXTERNAL README REVIEW
+* NEW CHANGES:
+	- group DECK was extremely judgemental
+		- for some reason they expected us to tell them how to create a venv
+		- they reprimanded us for not including something that was included later in the guide
+		- they thought git clone was supposed to be in launch codes (?)
+		- they gave us 1/3 for these things (how rude!)
+	- group FATCAT was much more positive
+	- both groups revealed an issue with the order of our commands being wrong
+		- this was fixed
