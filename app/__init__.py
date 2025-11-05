@@ -162,7 +162,7 @@ def edit(s_rowid):
 
         if update:
             if s_rowid == '0':
-                return redirect(f"/story/{fetch("story_base", True, "COUNT(*)")[0][0] + 1}")
+                return redirect(f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}")
             else:
                 return redirect(f"/story/{s_rowid}")
         else:
@@ -240,7 +240,7 @@ def update_story(s_rowid, editor_id, title, content):
             print("here1")
             author_user = fetch("user_base", f"rowid == '{editor_id}'", "username")
             print("here2")
-            path = f"/story/{fetch("story_base", True, "COUNT(*)")[0][0] + 1}"
+            path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
             c.execute(f"""
                       INSERT INTO story_base VALUES(
