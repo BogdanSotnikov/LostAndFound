@@ -145,7 +145,8 @@ def story(s_rowid):
         "story.html", 
         title=story_data[1], 
         content=story_data[2],
-        editors=story_data[4]
+        editors=story_data[4],
+        author_id=story_data[5]
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
@@ -155,14 +156,14 @@ def edit(s_rowid):
     if request.method == "POST":
         update = update_story(
             s_rowid, 
-            session['u_rowid'], 
+            session['u_rowid'][0], 
             request.form['story_title'],
             request.form['content']
         )
 
         if update:
             if s_rowid == '0':
-                return redirect(f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}")
+                return redirect(f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0]}")
             else:
                 return redirect(f"/story/{s_rowid}")
         else:
@@ -235,18 +236,14 @@ def update_story(s_rowid, editor_id, title, content):
     c = db.cursor()
     if s_rowid == '0': # creating new story
         c.execute("SELECT title FROM story_base")
-        titles = [title[0] for title in c.fetchall()]
+        titles = [t[0] for t in c.fetchall()]
         if not title in titles:
             print("here1")
-            author_user = fetch("user_base", f"rowid == '{editor_id}'", "username")
+            author_user = fetch("user_base", f"rowid == '{editor_id}'", "username")[0][0]
             print("here2")
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
-            c.execute(f"""
-                      INSERT INTO story_base VALUES(
-                      '{path}', '{title}', '{content}', 
-                      '{content}', '{author_user}', '{editor_id}')
-                      """)
+            c.execute(f"INSERT INTO story_base VALUES('{path}', '{title}', '{content}', '{content}', '{author_user}', {editor_id})")
             db.commit()
             db.close()
             return True
