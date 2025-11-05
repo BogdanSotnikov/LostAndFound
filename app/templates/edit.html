@@ -6,8 +6,23 @@
 
   </head>
 
-  <body>
+  <nav>
+    <button onclick="location.href='/profile'">My Profile</button>
+    <button onclick="location.href='/logout'">Logout</button>
+  </nav>
 
+  <body>
+    <br>
+    <form method="POST" action="">
+      {{ error|safe }}
+      <p>Title</p>
+      <input type="text" name="story_title" placeholder="Enter your title here" required>
+      <br><br>
+      <p>Content</p>
+      <textarea name="content" rows="40" cols="100" placeholder="Enter your story here..." required></textarea>
+      <br>
+      <input type="submit" value="Publish Changes">
+    </form>
   </body>
 
   <footer>

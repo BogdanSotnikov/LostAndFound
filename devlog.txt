@@ -147,3 +147,11 @@ CSS
 * NEW CHANGES:
     - completed login css
     - fixed minor issue with create_user
+
+jakeL -- 2025-11-4 19:10
+STORY AND EDIT PAGE
+* NEW CHANGES:
+    - create story button on landing page
+    - edit page where user can input text to create/edit pages
+    - update_story method saves user changes and adds edits to Database
+    - functioning story page, now shows title and content

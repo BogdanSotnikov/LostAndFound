@@ -136,14 +136,44 @@ def profile(u_rowid):
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def story(s_rowid):
+    print("here1")
     if not 'u_rowid' in session:
         return redirect("/login")
-    return render_template("story.html")
+    
+    story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
+    return render_template(
+        "story.html", 
+        title=story_data[1], 
+        content=story_data[2],
+        editors=story_data[4]
+    )
 
-@app.route('/edit/<s_rowid>') # makes s_rowid a variable that is passed to the function
+@app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
 def edit(s_rowid):
     if not 'u_rowid' in session:
         return redirect("/login")
+    if request.method == "POST":
+        update = update_story(
+            s_rowid, 
+            session['u_rowid'], 
+            request.form['story_title'],
+            request.form['content']
+        )
+
+        if update:
+            if s_rowid == '0':
+                return redirect(f"/story/{fetch("story_base", True, "COUNT(*)")[0][0] + 1}")
+            else:
+                return redirect(f"/story/{s_rowid}")
+        else:
+            return render_template(
+                "edit.html", 
+                error="""
+                <p style=\"color: red;\">
+                    Title already exists, please choose a different title
+                </p>
+                """)
+
     return render_template("edit.html")
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
@@ -199,6 +229,38 @@ def create_user(username, password):
     db.commit()
     db.close()
     return False
+
+def update_story(s_rowid, editor_id, title, content):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if s_rowid == '0': # creating new story
+        c.execute("SELECT title FROM story_base")
+        titles = [title[0] for title in c.fetchall()]
+        if not title in titles:
+            print("here1")
+            author_user = fetch("user_base", f"rowid == '{editor_id}'", "username")
+            print("here2")
+            path = f"/story/{fetch("story_base", True, "COUNT(*)")[0][0] + 1}"
+            print("here3")
+            c.execute(f"""
+                      INSERT INTO story_base VALUES(
+                      '{path}', '{title}', '{content}', 
+                      '{content}', '{author_user}', '{editor_id}')
+                      """)
+            db.commit()
+            db.close()
+            return True
+        return False # title already exists, prompt user to change title
+    
+    else: # updating existing story
+        c.execute(f"""
+                  UPDATE story_base
+                  SET content = 'content + {content}'
+                  WHERE rowid == '{s_rowid}'
+                  """)
+        db.commit()
+        db.close()
+        return True
 
 def update_pfp(pfp, u_rowid):
     db = sqlite3.connect(DB_FILE)
