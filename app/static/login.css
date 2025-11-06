@@ -48,8 +48,9 @@ h1 {
   width: 95vw;
   height: 80vh;
 
-  border-radius: 20vw 20vw 0 0;
-  border-left: 25px solid transparent;
+  border-radius: 25vw 25vw 0 0;
+  border-bottom-right-radius: 10vw 60vw;
+  border-bottom-left-radius: 10vw 60vw;
 }
 
 /* LEFT AND RIGHT SEEDS */
@@ -77,11 +78,13 @@ h1 {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  font-size: clamp(20px, 1.25vh, 1.5vh);
 
   width: 60%;
 }
 
 #prompt {
+  margin-top: 2em;
   font-size: clamp(20px, 3.25vh, 3.5vh);
 }
 
@@ -94,4 +97,12 @@ button, #sub1 {
 
 button {
   width: 6em;
+  margin-top: 0.5em;
+}
+
+#tops {
+  position: relative;
+  bottom: 2vh;
+
+  height:8vh;
 }
