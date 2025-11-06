@@ -181,3 +181,4 @@ WORKING ON EDITING
 	- added edit button to stories
     - added some jinja to html for differentiation btw existing/new stories
     - added story ids to user_base (contributed)
+    - incremented # of contributions
