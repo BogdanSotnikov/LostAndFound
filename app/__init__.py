@@ -142,14 +142,14 @@ def story(s_rowid):
     print(type(s_rowid))
     if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
         return redirect("/")
-    
+
     story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
     u_rowid = session['u_rowid'][0]
     cont = fetch('user_base', f"ROWID={u_rowid}",'contributions')[0][0].split(',')[1:]
     no_edit = (s_rowid not in cont)
     return render_template(
-        "story.html", 
-        title=story_data[1], 
+        "story.html",
+        title=story_data[1],
         content=story_data[2],
         editors=story_data[4],
         author_id=story_data[5],
@@ -169,8 +169,8 @@ def edit(s_rowid):
         else:
             title = ''
         update = update_story(
-            s_rowid, 
-            session['u_rowid'][0], 
+            s_rowid,
+            session['u_rowid'][0],
             title,
             request.form['content']
         )
@@ -182,7 +182,7 @@ def edit(s_rowid):
                 return redirect(f"/story/{s_rowid}")
         else:
             return render_template(
-                "edit.html", 
+                "edit.html",
                 display_title = (s_rowid == '0'), # always true since title is empty string for editing existing story
                 recent = "",
                 error="""
@@ -198,12 +198,6 @@ def edit(s_rowid):
         <p> Last entry: <br> {story_d[0][1]} </p>
         """
     return render_template("edit.html", display_title = (s_rowid == '0'), recent_content = recent)
-
-@app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
-def author(u_rowid):
-    if not 'u_rowid' in session:
-        return redirect("/login")
-    return render_template("author.html")
 
 # HELPER FUNCTIONS
 def fetch(table, criteria, data):
@@ -275,14 +269,14 @@ def update_story(s_rowid, editor_id, title, content):
             db.close()
             return True
         return False # title already exists, prompt user to change title
-    
+
     else: # updating existing story
         c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + s_rowid}' WHERE rowid == '{editor_id}'""")
         c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
         original_content = fetch('story_base', f"rowid == '{s_rowid}'", 'content')[0][0]
         c.execute(f"""
                   UPDATE story_base
-                  SET content = '{original_content + " " + content}'
+                  SET content = '{original_content + "<br><br>" + content}'
                   WHERE rowid == '{s_rowid}'
                   """)
         c.execute(f"""
