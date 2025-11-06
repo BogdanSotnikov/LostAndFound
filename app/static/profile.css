@@ -70,6 +70,15 @@ nav {
   flex-wrap: wrap;
 }
 
+button {
+  font-family: font;
+  font-size: 150%;
+  border: none;
+  background-color: transparent;
+  color: #8CB360;
+  text-decoration: none;
+}
+
 .ibutton {
   width: 5em; /* em allows for the items to adjust accordingly to font-size which makes it more suitable for wrapping */
   height: auto;
