@@ -144,13 +144,17 @@ def story(s_rowid):
         return redirect("/")
     
     story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
+    u_rowid = session['u_rowid'][0]
+    cont = fetch('user_base', f"ROWID={u_rowid}",'contributions')[0][0].split(',')[1:]
+    no_edit = (s_rowid not in cont)
     return render_template(
         "story.html", 
         title=story_data[1], 
         content=story_data[2],
         editors=story_data[4],
         author_id=story_data[5],
-        story_id=s_rowid
+        story_id=s_rowid,
+        didnt_edit=no_edit
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function

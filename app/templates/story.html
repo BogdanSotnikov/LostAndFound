@@ -9,7 +9,9 @@
   <nav>
     <button onclick="location.href='/profile'">My Profile</button>
     <button onclick="location.href='/logout'">Logout</button>
-    <button onclick="location.href='/edit/{{story_id}}'">Edit</button>
+    {% if didnt_edit %}
+      <button onclick="location.href='/edit/{{story_id}}'">Edit</button>
+    {% endif %}
   </nav>
 
   <body>
