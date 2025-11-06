@@ -263,9 +263,10 @@ def update_story(s_rowid, editor_id, title, content):
         return False # title already exists, prompt user to change title
     
     else: # updating existing story
+        original_content = fetch('story_base', f"rowid == '{s_rowid}'", 'content')[0][0]
         c.execute(f"""
                   UPDATE story_base
-                  SET content = 'content + {content}'
+                  SET content = '{original_content + " " + content}'
                   WHERE rowid == '{s_rowid}'
                   """)
         db.commit()
