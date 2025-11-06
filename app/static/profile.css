@@ -91,9 +91,9 @@ button {
   /* sets position for this part of the page */
   align-self: center;
   width: 95%;
-  height: clamp(40vh,41vh,auto);
+  height: clamp(0px,41vh,auto);
 }
 
-#conts {
-  margin-bottom: -2%;
+ul {
+  margin-top: -2%;
 }

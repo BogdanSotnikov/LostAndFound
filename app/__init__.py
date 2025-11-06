@@ -131,7 +131,7 @@ def profile(u_rowid):
             edit=edit,
             badge=badge,
             times_cont=u_data[2],
-            if_conts="No contributions yet.")
+            if_conts="No contributions yet. <br><br><br>")
 
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function

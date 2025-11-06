@@ -32,8 +32,8 @@
         {{ badge }} <br>
         Times Contributed: {{ times_cont }}
       </p>
-      <h3 id="conts"> Contributions </h3>
-      <p> {{ if_conts }} </p>
+      <h3> Contributions </h3>
+      <p> {{ if_conts | safe }} </p>
       <ul>
         {% for story in contributions %}
           <li> <a href={{ story[1] }}> {{ story[0] }} </a></li>
