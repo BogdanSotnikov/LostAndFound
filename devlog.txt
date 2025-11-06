@@ -167,3 +167,9 @@ EXTERNAL README REVIEW
 	- group FATCAT was much more positive
 	- both groups revealed an issue with the order of our commands being wrong
 		- this was fixed
+
+bogdanS -- 2025-11-5 23:37
+WORKING ON STORY SYSTEM
+* NEW CHANGES:
+	- worked on the story creation system in class
+		- debugging
