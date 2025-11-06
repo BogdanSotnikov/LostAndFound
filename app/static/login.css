@@ -95,9 +95,14 @@ button, #sub1 {
   background-color: transparent;
 }
 
-button {
-  width: 6em;
-  margin-top: 0.5em;
+a {
+  font-family: font;
+  font-size: 150%;
+  border: none;
+  background-color: transparent;
+  color: #8CB360;
+  margin: 10px;
+  text-decoration: none;
 }
 
 #tops {

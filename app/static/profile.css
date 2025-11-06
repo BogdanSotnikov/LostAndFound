@@ -16,24 +16,31 @@ html, body {
 
 /* NAVBAR */
 nav {
-  background-color: #4F6D3A;
-  padding: 0.75%;
-}
-
-button {
   font-family: font;
   font-size: 150%;
   border: none;
   background-color: transparent;
   color: #8CB360;
+  text-decoration: none;
+  background-color: #4F6D3A;
+  padding: 0.75%;
+}
+
+a
+{
+  margin: 10px;
 }
 
 .back {
   font-weight: 900;
+  color: #8CB360;
+  text-decoration: none;
 }
 
 .logout {
   float: right;
+  color: #8CB360;
+  text-decoration: none;
 }
 
 /* PFP */

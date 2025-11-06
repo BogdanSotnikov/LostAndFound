@@ -73,6 +73,8 @@ def register():
 
 @app.route('/profile', methods=["GET", "POST"])
 def profileDefault():
+    if not 'u_rowid' in session:
+        return redirect("/login")
     return redirect(f"/profile/{session['u_rowid'][0]}");
 
 @app.route('/profile/<u_rowid>', methods=["GET", "POST"]) # makes u_rowid a variable that is passed to the function
