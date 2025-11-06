@@ -195,3 +195,9 @@ PROFILE AND LOGIN
   - made it so that new entries are separated by line breaks (story)
 * ERRORS/BUGS:
   - when you edit a story, the user is not displayed as an editor
+
+joyceL -- 2025-11-6 10:10
+PROFILE AND LOGIN
+* NEW CHANGES:
+  - fixed display problems for login page
+  - separated landing into own css file
