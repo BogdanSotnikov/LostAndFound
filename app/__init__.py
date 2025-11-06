@@ -146,7 +146,8 @@ def story(s_rowid):
         title=story_data[1], 
         content=story_data[2],
         editors=story_data[4],
-        author_id=story_data[5]
+        author_id=story_data[5],
+        story_id=s_rowid
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
@@ -154,10 +155,14 @@ def edit(s_rowid):
     if not 'u_rowid' in session:
         return redirect("/login")
     if request.method == "POST":
+        if s_rowid == '0':
+            title = request.form['story_title']
+        else:
+            title = ''
         update = update_story(
             s_rowid, 
             session['u_rowid'][0], 
-            request.form['story_title'],
+            title,
             request.form['content']
         )
 
@@ -169,13 +174,21 @@ def edit(s_rowid):
         else:
             return render_template(
                 "edit.html", 
+                displayTitle = (s_rowid == '0'), # always true since title is empty string for editing existing story
+                recent = "",
                 error="""
                 <p style=\"color: red;\">
                     Title already exists, please choose a different title
                 </p>
                 """)
-
-    return render_template("edit.html")
+    recent = "" # displays most recent entry if editing existing story
+    if s_rowid != '0':
+        story_d = fetch('story_base', f"rowid == '{s_rowid}'", 'title, last_entry')
+        recent = f"""
+        <h1> {story_d[0][0]} </h1>
+        <p> Last entry: <br> {story_d[0][1]} </p>
+        """
+    return render_template("edit.html", displayTitle = (s_rowid == '0'), recentContent = recent)
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def author(u_rowid):

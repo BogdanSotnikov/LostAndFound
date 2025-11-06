@@ -15,10 +15,15 @@
     <br>
     <form method="POST" action="">
       {{ error|safe }}
-      <p>Title</p>
-      <input type="text" name="story_title" placeholder="Enter your title here" required>
-      <br><br>
-      <p>Content</p>
+      {% if displayTitle %}
+        <p>Title</p>
+        <input type="text" name="story_title" placeholder="Enter your title here" required>
+        <br><br>
+        <p>Content</p>
+      {% else %}
+        {{recentContent|safe}}
+        <p>New entry</p>
+      {% endif %}
       <textarea name="content" rows="40" cols="100" placeholder="Enter your story here..." required></textarea>
       <br>
       <input type="submit" value="Publish Changes">
