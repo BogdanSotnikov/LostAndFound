@@ -113,7 +113,7 @@ def profile(u_rowid):
     # renders page
     if len(u_data[3]) > 0:
         conts = []
-        for story in u_data[3].split(','):
+        for story in u_data[3].split(',')[1:]:
             conts.append(fetch('story_base', f"rowid = {story}", 'title, path')[0])
         return render_template("profile.html",
             username=u_data[0],
@@ -247,6 +247,8 @@ def create_user(username, password):
 def update_story(s_rowid, editor_id, title, content):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
+    original_cont = fetch('user_base', f"rowid == '{editor_id}'", 'contributions')[0][0] # adds story id to contirbutions ",#,#"
+    new_num_cont = fetch('user_base', f"rowid == '{editor_id}'", 'times_cont')[0][0] + 1
     if s_rowid == '0': # creating new story
         c.execute("SELECT title FROM story_base")
         titles = [t[0] for t in c.fetchall()]
@@ -257,12 +259,17 @@ def update_story(s_rowid, editor_id, title, content):
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
             c.execute(f"INSERT INTO story_base VALUES('{path}', '{title}', '{content}', '{content}', '{author_user}', {editor_id})")
+            new_cont = str(fetch('story_base', True, 'COUNT(*)')[0][0] + 1)
+            c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + new_cont}' WHERE rowid == '{editor_id}'""")
+            c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
             db.commit()
             db.close()
             return True
         return False # title already exists, prompt user to change title
     
     else: # updating existing story
+        c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + s_rowid}' WHERE rowid == '{editor_id}'""")
+        c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
         original_content = fetch('story_base', f"rowid == '{s_rowid}'", 'content')[0][0]
         c.execute(f"""
                   UPDATE story_base

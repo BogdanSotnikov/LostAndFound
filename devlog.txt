@@ -173,3 +173,11 @@ WORKING ON STORY SYSTEM
 * NEW CHANGES:
 	- worked on the story creation system in class
 		- debugging
+
+naomiK -- 2025-11-6 23:50
+WORKING ON EDITING
+* NEW CHANGES:
+	- changed author button
+	- added edit button to stories
+    - added some jinja to html for differentiation btw existing/new stories
+    - added story ids to user_base (contributed)
