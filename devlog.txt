@@ -183,3 +183,15 @@ WORKING ON EDITING
     - added story ids to user_base (contributed)
     - incremented # of contributions
     - last entry
+
+joyceL -- 2025-11-6 10:10
+PROFILE AND LOGIN
+* NEW CHANGES:
+  - moved some stuff around (like put create button on the top)
+  - added back buttons
+  - removed author page (redundant)
+  - finalized login css
+  - fixed profile page contributions display
+  - made it so that new entries are separated by line breaks (story)
+* ERRORS/BUGS:
+  - when you edit a story, the user is not displayed as an editor
