@@ -286,6 +286,13 @@ def update_story(s_rowid, editor_id, title, content):
                   SET last_entry = '{content}'
                   WHERE rowid == '{s_rowid}'
                   """)
+        original_editors = fetch('story_base', f"rowid == '{s_rowid}'", 'editors')[0][0]
+        new_editor = fetch('user_base', f"rowid == '{editor_id}'", 'username')[0][0]
+        c.execute(f"""
+                  UPDATE story_base
+                  SET editors = '{original_editors + ", " + new_editor}'
+                  WHERE rowid == '{s_rowid}'
+                  """)
         db.commit()
         db.close()
         return True
