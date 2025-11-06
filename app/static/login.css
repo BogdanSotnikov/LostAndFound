@@ -30,7 +30,7 @@ html, body {
 
 h1 {
   color: #8CB360;
-  font-size: 6vh;
+  font-size: clamp(100px, 6, 6.25vh);
   text-align: center;
   padding-top: 8vh;
   padding-left: 3%;
@@ -46,7 +46,7 @@ h1 {
   text-align: center;
   background-color: #B23C4B;
   width: 95vw;
-  height: 80vh;
+  height: clamp(500px, 80vh, 80vh);
 
   border-radius: 25vw 25vw 0 0;
   border-bottom-right-radius: 10vw 60vw;
@@ -95,14 +95,9 @@ button, #sub1 {
   background-color: transparent;
 }
 
-a {
-  font-family: font;
-  font-size: 150%;
-  border: none;
-  background-color: transparent;
-  color: #8CB360;
-  margin: 10px;
-  text-decoration: none;
+button {
+  width: 6em;
+  margin-top: 0.5em;
 }
 
 #tops {
@@ -110,4 +105,5 @@ a {
   bottom: 2vh;
 
   height:8vh;
+  width: 85vh;
 }

@@ -20,15 +20,9 @@ nav {
   font-size: 150%;
   border: none;
   background-color: transparent;
-  color: #8CB360;
-  text-decoration: none;
+
   background-color: #4F6D3A;
   padding: 0.75%;
-}
-
-a
-{
-  margin: 10px;
 }
 
 .back {
