@@ -15,13 +15,13 @@
     <br>
     <form method="POST" action="">
       {{ error|safe }}
-      {% if displayTitle %}
+      {% if display_title %}
         <p>Title</p>
         <input type="text" name="story_title" placeholder="Enter your title here" required>
         <br><br>
         <p>Content</p>
       {% else %}
-        {{recentContent|safe}}
+        {{recent_content|safe}}
         <p>New Content</p>
       {% endif %}
       <textarea name="content" rows="40" cols="100" placeholder="Enter your story here..." required></textarea>

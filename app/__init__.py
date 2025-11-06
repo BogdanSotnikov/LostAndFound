@@ -183,7 +183,7 @@ def edit(s_rowid):
         else:
             return render_template(
                 "edit.html", 
-                displayTitle = (s_rowid == '0'), # always true since title is empty string for editing existing story
+                display_title = (s_rowid == '0'), # always true since title is empty string for editing existing story
                 recent = "",
                 error="""
                 <p style=\"color: red;\">
@@ -197,7 +197,7 @@ def edit(s_rowid):
         <h1> {story_d[0][0]} </h1>
         <p> Last entry: <br> {story_d[0][1]} </p>
         """
-    return render_template("edit.html", displayTitle = (s_rowid == '0'), recentContent = recent)
+    return render_template("edit.html", display_title = (s_rowid == '0'), recent_content = recent)
 
 @app.route('/author/<u_rowid>') # makes u_rowid a variable that is passed to the function
 def author(u_rowid):
