@@ -139,6 +139,9 @@ def story(s_rowid):
     print("here1")
     if not 'u_rowid' in session:
         return redirect("/login")
+    print(type(s_rowid))
+    if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
+        return redirect("/")
     
     story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
     return render_template(
@@ -154,6 +157,8 @@ def story(s_rowid):
 def edit(s_rowid):
     if not 'u_rowid' in session:
         return redirect("/login")
+    if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
+        return redirect("/")
     if request.method == "POST":
         if s_rowid == '0':
             title = request.form['story_title']
@@ -274,6 +279,11 @@ def update_story(s_rowid, editor_id, title, content):
         c.execute(f"""
                   UPDATE story_base
                   SET content = '{original_content + " " + content}'
+                  WHERE rowid == '{s_rowid}'
+                  """)
+        c.execute(f"""
+                  UPDATE story_base
+                  SET last_entry = '{content}'
                   WHERE rowid == '{s_rowid}'
                   """)
         db.commit()
