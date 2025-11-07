@@ -93,6 +93,7 @@ button, #sub1 {
   font-size: 115%;
   border-color: black;
   background-color: transparent;
+  cursor: pointer;
 }
 
 button {

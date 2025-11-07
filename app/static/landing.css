@@ -45,4 +45,10 @@ nav {
   /* sets position for this part of the page */
   align-self: center;
   width: 95%;
+
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: -20px;
 }
