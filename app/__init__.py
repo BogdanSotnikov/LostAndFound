@@ -32,10 +32,10 @@ def homepage():
         #session['u_rowid'] = request.form['u_rowid']
     tableString = ""
     for i in range(fetch('story_base', True, 'COUNT(*)')[0][0]):
-        if (i%3==0)
+        if (i%3==0):
             tableString +="<tr>"
         tableString+= f"<a href="
-        if (i%3==2)
+        if (i%3==2):
             tableString +="</tr>"
     return render_template("landing.html")
 
@@ -197,12 +197,12 @@ def story(s_rowid):
     story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
     u_rowid = session['u_rowid'][0]
     cont = fetch('user_base', f"ROWID={u_rowid}",'contributions')[0][0].split(',')[1:]
-    print(story_data[4].split(','))
-    editor_ids = [fetch('user_base', f"username=='{editor}'", 'rowid')[0][0] for editor in story_data[4].split(',')]
-    editors = dict(zip(editor_ids, story_data[4].split(',')))
+    editor_ids = []
+    if len(story_data[4]) > 0:
+        editor_ids = [fetch('user_base', f"username=='{editor}'", 'rowid')[0][0] for editor in story_data[4].split(',')[1:]]
+    editors = dict(zip(editor_ids, story_data[4].split(',')[1:]))
     no_edit = (s_rowid not in cont)
-    print(story_data)
-    if no_edit:
+    if no_edit and len(editor_ids) > 0:
         entries = "..." + story_data[3]
     else:
         entries = story_data[2]
@@ -214,7 +214,7 @@ def story(s_rowid):
         author_id=story_data[5],
         story_id=s_rowid,
         didnt_edit=no_edit,
-        author_user=fetch('user_base', f"ROWID={story_data[5][0]}", 'username')[0][0]
+        author_user=fetch('user_base', f"ROWID={story_data[5]}", 'username')[0][0]
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
@@ -321,7 +321,7 @@ def update_story(s_rowid, editor_id, title, content):
             print("here2")
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
-            c.execute(f"INSERT INTO story_base VALUES('{path}', '{title}', '{content}', '{content}', '{author_user}', {editor_id})")
+            c.execute(f"INSERT INTO story_base VALUES('{path}', '{title}', '{content}', '{content}', '', {editor_id})")
             new_cont = str(fetch('story_base', True, 'COUNT(*)')[0][0] + 1)
             c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + new_cont}' WHERE rowid == '{editor_id}'""")
             c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
