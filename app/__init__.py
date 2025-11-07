@@ -30,6 +30,13 @@ def homepage():
         return redirect("/login")
     #if request.method == 'POST':
         #session['u_rowid'] = request.form['u_rowid']
+    tableString = ""
+    for i in range(fetch('story_base', True, 'COUNT(*)')[0][0]):
+        if (i%3==0)
+            tableString +="<tr>"
+        tableString+= f"<a href="
+        if (i%3==2)
+            tableString +="</tr>"
     return render_template("landing.html")
 
 # USER INTERACTIONS
