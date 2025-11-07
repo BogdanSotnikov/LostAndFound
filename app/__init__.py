@@ -37,19 +37,62 @@ def homepage():
 def login():
     if request.method == 'POST':
         usernames = [row[0] for row in fetch("user_base", "TRUE", "username")]
-        if not request.form['username'] in usernames:
-            return render_template("login.html", error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
+        # FORGOT PASSWORD
+        if "forgot" in request.form:
+            return render_template("login.html",
+                normal=False,
+                prompt="Please &nbsp enter &nbsp your &nbsp username &nbsp below:",
+                request="""<input type='Text' name='f_user'> <br><br>
+                <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+        elif "f_user" in request.form:
+            if request.form['f_user'] in usernames:
+                session['question'] = random.randint(1,5) # change range when we have a certain number of questions
+                session['username'] = request.form['f_user']
+                return render_template("login.html",
+                    normal=False,
+                    prompt="Solve &nbsp the &nbsp math &nbsp problem &nbsp below:",
+                    #/math{session['question'][0]}.jpg"
+                    request=f"""<image src="/static/leaf.jpg"> <input type='Text' name='answer'> <br><br>
+                    <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+            return render_template("login.html",
+                normal=False,
+                error="User &nbsp does &nbsp not &nbsp exist",
+                prompt="Please &nbsp enter &nbsp your &nbsp username &nbsp below:",
+                request="""<input type='Text' name='f_user'> <br><br>
+                <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+        elif "answer" in request.form:
+            return render_template("login.html", normal=True) # probably use dbs to save problems + answers?? or would it be better to just have a dictionary
+        elif "new_pw" in request.form:
+            if not request.form['new_pw'] == request.form['confirm']:
+                return render_template("login.html",
+                    normal=False,
+                    error="Passwords do not match, please try again!",
+                    prompt="Enter &nbsp your &nbsp new &nbsp password &nbsp below:",
+                    request="""<input type='Text' name='new_pw'> <br><br>
+                    <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+            update_password(request.form['new_pw'], session['username'][0])
+            session.clear()
+            return render_template("login.html", normal=True)
+
+
+        # SIGNING IN
+        elif not request.form['username'] in usernames:
+            return render_template("login.html",
+                error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
+                normal=True)
         elif request.form['password'] != fetch("user_base",
                                 f"username = \"{request.form['username']}\"",
                                 "password")[0][0]:
-                return render_template("login.html", error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>")
+                return render_template("login.html",
+                    error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
+                    normal=True)
         else:
             session["u_rowid"] = fetch("user_base",
                                 f"username = \"{request.form['username']}\"",
                                 "rowid")[0]
     if 'u_rowid' in session:
         return redirect("/")
-    return render_template("login.html")
+    return render_template("login.html", normal=True)
 
 @app.route('/logout', methods=["GET", "POST"])
 def logout():
@@ -100,7 +143,6 @@ def profile(u_rowid):
             edit += "</form>"
     else:
         edit = f"""<form method='POST' action={u_rowid}>
-        <input type='hidden' name='hidden'>
         <input type='Image' src='/static/edit.png' name='Change PFP'>
         </form>"""
 
@@ -301,6 +343,13 @@ def update_pfp(pfp, u_rowid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
     c.execute(f"UPDATE user_base SET pfp = \'{pfp}\' WHERE ROWID=\'{u_rowid}\'")
+    db.commit()
+    db.close()
+
+def update_password(pw, username):
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute(f"UPDATE user_base SET password = \'{pw}\' WHERE username=\'{username}\'")
     db.commit()
     db.close()
 

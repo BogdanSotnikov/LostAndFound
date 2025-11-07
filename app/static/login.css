@@ -88,7 +88,7 @@ h1 {
   font-size: clamp(20px, 3.25vh, 3.5vh);
 }
 
-button, #sub1 {
+button, .sub1 {
   font-family: font;
   font-size: 115%;
   border-color: black;
@@ -96,9 +96,13 @@ button, #sub1 {
   cursor: pointer;
 }
 
-button {
+#register {
   width: 6em;
-  margin-top: 0.5em;
+}
+
+#forgot {
+  width: 9em;
+  margin-top: 0.7em;
 }
 
 #tops {
