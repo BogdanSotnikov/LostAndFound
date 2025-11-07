@@ -194,14 +194,20 @@ def story(s_rowid):
     editor_ids = [fetch('user_base', f"username=='{editor}'", 'rowid')[0][0] for editor in story_data[4].split(',')]
     editors = dict(zip(editor_ids, story_data[4].split(',')))
     no_edit = (s_rowid not in cont)
+    print(story_data)
+    if no_edit:
+        entries = "..." + story_data[3]
+    else:
+        entries = story_data[2]
     return render_template(
         "story.html",
         title=story_data[1],
-        content=story_data[2],
+        content=entries,
         editors=editors,
         author_id=story_data[5],
         story_id=s_rowid,
-        didnt_edit=no_edit
+        didnt_edit=no_edit,
+        author_user=fetch('user_base', f"ROWID={story_data[5][0]}", 'username')[0][0]
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
