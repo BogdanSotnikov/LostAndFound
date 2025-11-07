@@ -125,10 +125,10 @@ def profile(u_rowid):
     # session.clear()
     if not 'u_rowid' in session and session['u_rowid'] == u_rowid:
         return redirect("/login")
+
     u_data = fetch('user_base',
                    f"ROWID={u_rowid}",
                    'username, pfp, times_cont, contributions')[0]
-
     # pfp editing
     if request.method=='POST':
         if 'pfp' in request.form:
@@ -190,12 +190,15 @@ def story(s_rowid):
     story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
     u_rowid = session['u_rowid'][0]
     cont = fetch('user_base', f"ROWID={u_rowid}",'contributions')[0][0].split(',')[1:]
+    print(story_data[4].split(','))
+    editor_ids = [fetch('user_base', f"username=='{editor}'", 'rowid')[0][0] for editor in story_data[4].split(',')]
+    editors = dict(zip(editor_ids, story_data[4].split(',')))
     no_edit = (s_rowid not in cont)
     return render_template(
         "story.html",
         title=story_data[1],
         content=story_data[2],
-        editors=story_data[4],
+        editors=editors,
         author_id=story_data[5],
         story_id=s_rowid,
         didnt_edit=no_edit
@@ -332,7 +335,7 @@ def update_story(s_rowid, editor_id, title, content):
         new_editor = fetch('user_base', f"rowid == '{editor_id}'", 'username')[0][0]
         c.execute(f"""
                   UPDATE story_base
-                  SET editors = '{original_editors + ", " + new_editor}'
+                  SET editors = '{original_editors + "," + new_editor}'
                   WHERE rowid == '{s_rowid}'
                   """)
         db.commit()

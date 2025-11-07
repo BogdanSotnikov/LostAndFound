@@ -24,10 +24,12 @@
   </body>
 
   <footer>
-    <button onclick="location.href='/profile/{{author_id}}'">Author Profile</button>
+    <a href="/profile/{{author_id}}">Author Profile</a>
     <br>
-    <p>Editors: {{editors}}</p>
-
+    <p>Editors: </p>
+      {% for editor_id, editor_user in editors.items() %}
+        <a href="/profile/{{ editor_id }}">{{ editor_user }}</a>
+      {% endfor %}
   </footer>
 
 </html>

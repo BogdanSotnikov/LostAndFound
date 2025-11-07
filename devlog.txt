@@ -202,3 +202,10 @@ PROFILE AND LOGIN
   - fixed display problems for login page
   - separated landing into own css file
   - began forgot password mechanic
+
+jakeL -- 2025-11-6 23:55
+STORY PAGE
+* NEW CHANGES:
+    - author and editors section now has links to profile pages
+* ERRORS/BUGS:
+    - delete extraneous whitespace when adding to editors list (method update_story)
