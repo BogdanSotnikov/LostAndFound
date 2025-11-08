@@ -3,33 +3,40 @@
 <html>
 
   <head>
-
+    <link rel="stylesheet"
+      type="text/css"
+      href="/static/story.css">
   </head>
 
   <nav>
-    <button onclick="location.href='/'" class="back">&#8592;</button>
-    <button onclick="location.href='/profile'">My Profile</button>
-    <button onclick="location.href='/logout'">Logout</button>
+    <a href='/logout' class="util">Logout</a>
+    <a href='/profile' class="util">My Profile</a>
+    <a href='/' class="back">&#8592;</a>
     {% if didnt_edit %}
-      <button onclick="location.href='/edit/{{story_id}}'">Edit</button>
+      <a href='/edit/{{story_id}}' class="util">Edit</button>
     {% endif %}
   </nav>
 
   <body>
-
-
-    <h1> {{ title }} </h1>
-    {{ content | safe }}
-
+    <div class="main">
+      <h1> {{ title }} </h1>
+        <div class="content">
+          {{ content | safe }}
+        </div>
+    </div>
   </body>
 
   <footer>
-    <a href="/profile/{{author_id}}">Author: {{author_user}}</a>
-    <br>
-    <p>Editors: </p>
-      {% for editor_id, editor_user in editors.items() %}
-        <a href="/profile/{{ editor_id }}">{{ editor_user }}</a> 
-      {% endfor %}
+    <div class="editors">
+      <a href="/profile/{{author_id}}">Author: {{author_user}}</a>
+      <br>
+      <p>Editors: </p>
+      <ul>
+        {% for editor_id, editor_user in editors.items() %}
+          <li><a href="/profile/{{ editor_id }}">{{ editor_user }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
   </footer>
 
 </html>

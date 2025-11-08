@@ -1,0 +1,75 @@
+@font-face {
+    font-family: font;
+    src: url(arcadeclassic.regular.ttf);
+}
+
+/* NAVBAR */
+nav {
+    font-family: font;
+    border: none;  
+    background-color: #4F6D3A;
+    padding: 0;
+}
+
+.back {
+    color: #8CB360;
+    text-decoration: none;
+    float: left;
+}
+
+.util {
+    float: right;
+    color: #8CB360;
+    text-decoration: none;
+}
+
+a {
+    font-family: font;
+    border: none;
+    font-size: 150%;
+    background-color: transparent;
+    color: #8CB360;
+    margin: 10px;
+    text-decoration: none;
+  }
+
+html, body {
+    font-family: font;
+    margin: 0;
+    padding: 0;
+    background-image: url(/static/strawb3.jpg);
+    /* turns body into a flex container and aligns everything vertically */
+    display: flex;
+    flex-direction: column;
+
+}
+
+.main {
+    display: flex;
+    padding: 2%;
+    padding-top: 2%;
+    align-self: center;
+    flex-direction: column;
+    align-items: left;
+    width: 80vw;
+    height: 28em;
+    background-color: #bf5d6c;
+}
+
+h1{
+    text-align: center;
+}
+
+.editors{
+    color: #8CB360;
+    display: flex;
+    flex-direction: column;
+    background-color: #4F6D3A;
+    padding: 1%;
+}
+
+p{
+    font-size: 130%;
+}
+
+

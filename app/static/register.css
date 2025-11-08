@@ -1,7 +1,7 @@
 @font-face {
-    font-family: font;
-    src: url(arcadeclassic.regular.ttf);
-  }
+   font-family: font;
+   src: url(arcadeclassic.regular.ttf);
+}
 
 /* NAVBAR */
 nav {
@@ -19,13 +19,6 @@ html, body {
     flex-direction: column;
 }
 
-h1 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
-}
 
 .main {
     display: flex;
