@@ -25,6 +25,12 @@ nav {
   padding: 0.75%;
 }
 
+.back {
+  font-weight: 900;
+  color: #8CB360;
+  text-decoration: none;
+}
+
 .util {
   float: right;
   color: #8CB360;
@@ -37,18 +43,39 @@ nav {
 .main {
   display: flex;
   flex-flow: column;
-  padding: 1%;
-  padding-top: 0;
-  margin-top: 4vh;
+  margin-top: 1.5vh;
+  margin-bottom: 1.5vh;
+  padding-bottom: 1.25%;
   background-color: #B94F5D;
 
   /* sets position for this part of the page */
   align-self: center;
-  width: 95%;
+  width: clamp(800px, 90%, 100vw);
 
   text-align: center;
 }
 
 h1 {
-  margin-bottom: -20px;
+  font-size: 5vh;
+  margin-bottom: -5px;
+}
+
+p {
+  font-size: 110%;
+}
+
+input[type=text], textarea {
+  border-radius: 4px;
+  border-width: thin;
+  border-color: black;
+}
+
+#submit {
+  font-family: font;
+  font-size: 130%;
+  border-color: black;
+  background-color: transparent;
+
+  margin-top: 0.75em;
+  cursor: pointer;
 }
