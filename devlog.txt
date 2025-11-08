@@ -225,3 +225,11 @@ FORGOT PASSWORD FUNCTION
 * NEW CHANGES:
     - added 10 math problems and answers to problem set
     - user now able to solve a math problem to change password if forgotten
+
+joyceL -- 2025-11-8 00:52
+CSS AND STUFF
+* NEW CHANGES:
+  - working on story css
+  - fixed css to accommodate for new forgot password
+  - fixed any small issues that were found
+  

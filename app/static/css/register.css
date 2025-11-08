@@ -39,7 +39,16 @@ a {
   border: none;
   background-color: transparent;
   color: #8CB360;
-  margin: 10px;
+  text-decoration: none;
+}
+
+a:not(.back):hover {
+  text-decoration: underline;
+}
+
+.back {
+  font-weight: 900;
+  color: #8CB360;
   text-decoration: none;
 }
 

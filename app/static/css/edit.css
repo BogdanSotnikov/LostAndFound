@@ -25,6 +25,12 @@ nav {
   padding: 0.75%;
 }
 
+a:not(.back):hover {
+  text-decoration: underline;
+}
+
+
+
 .back {
   font-weight: 900;
   color: #8CB360;
