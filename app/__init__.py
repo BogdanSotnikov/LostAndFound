@@ -186,7 +186,16 @@ def profile(u_rowid):
     if len(u_data[3]) > 0:
         conts = []
         for story in u_data[3].split(',')[1:]:
-            conts.append(fetch('story_base', f"rowid = {story}", 'title, path')[0])
+            conts.append(fetch('story_base', f"rowid = {story}", 'title, path, author')[0])
+        conts_au = []
+        conts_ed = []
+        print(type(u_rowid))
+        for st in conts:
+            if st[2] == int(u_rowid):
+                conts_au.append(st)
+            else:
+                conts_ed.append(st)
+        contss = [conts_au, conts_ed]
         return render_template("profile.html",
             username=u_data[0],
             pfp=u_data[1],
@@ -195,8 +204,9 @@ def profile(u_rowid):
             own_profile=(session['u_rowid'][0] == int(u_rowid)),
             badge=badge,
             times_cont=u_data[2],
-            contributions=conts)
+            contributions=contss)
     else:
+        contss = []
         return render_template("profile.html",
             username=u_data[0],
             pfp=u_data[1],
@@ -205,7 +215,8 @@ def profile(u_rowid):
             own_profile=(session['u_rowid'][0] == int(u_rowid)),
             badge=badge,
             times_cont=u_data[2],
-            if_conts="No contributions yet. <br><br><br>")
+            if_conts="No contributions yet. <br><br><br>",
+            contributions=contss)
 
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
