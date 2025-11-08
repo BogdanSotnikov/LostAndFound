@@ -108,16 +108,12 @@ def login():
             return render_template("login.html",
                 error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
                 normal=True)
-        elif request.form['password'] != fetch("user_base",
-                                f"username = \"{request.form['username']}\"",
-                                "password")[0][0]:
+        elif request.form['password'] != fetch("user_base", "username = ?", "password", (request.form['username'],))[0][0]:
                 return render_template("login.html",
                     error="Wrong &nbsp username &nbsp or &nbsp password!<br><br>",
                     normal=True)
         else:
-            session["u_rowid"] = fetch("user_base",
-                                f"username = \"{request.form['username']}\"",
-                                "rowid")[0]
+            session["u_rowid"] = fetch("user_base", "username = ?", "rowid", (request.form['username'],))[0]
     if 'u_rowid' in session:
         return redirect("/")
     session.clear()
@@ -147,16 +143,14 @@ def register():
 def profileDefault():
     if not 'u_rowid' in session:
         return redirect("/login")
-    return redirect(f"/profile/{session['u_rowid'][0]}");
+    return redirect(f"/profile/{session['u_rowid'][0]}")
 
 @app.route('/profile/<u_rowid>', methods=["GET", "POST"]) # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
     # session.clear()
     if not 'u_rowid' in session:
         return redirect("/login")
-    u_data = fetch('user_base',
-                   f"ROWID={u_rowid}",
-                   'username, pfp, times_cont, contributions')[0]
+    u_data = fetch('user_base', "ROWID=?", 'username, pfp, times_cont, contributions', (u_rowid,))[0]
     # pfp editing
     if request.method=='POST':
         if 'pfp' in request.form:
@@ -186,7 +180,7 @@ def profile(u_rowid):
     if len(u_data[3]) > 0:
         conts = []
         for story in u_data[3].split(',')[1:]:
-            conts.append(fetch('story_base', f"rowid = {story}", 'title, path, author')[0])
+            conts.append(fetch('story_base', 'rowid = ?', 'title, path, author', (story,))[0])
         conts_au = []
         conts_ed = []
         print(type(u_rowid))
@@ -228,12 +222,12 @@ def story(s_rowid):
     if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
         return redirect("/")
 
-    story_data = fetch("story_base", f"rowid == '{s_rowid}'", "*")[0]
+    story_data = fetch("story_base", "rowid == ?", "*", (s_rowid,))[0]
     u_rowid = session['u_rowid'][0]
-    cont = fetch('user_base', f"ROWID={u_rowid}",'contributions')[0][0].split(',')[1:]
+    cont = fetch('user_base', 'ROWID=?','contributions', (u_rowid,))[0][0].split(',')[1:]
     editor_ids = []
     if len(story_data[4]) > 0:
-        editor_ids = [fetch('user_base', f"username=='{editor}'", 'rowid')[0][0] for editor in story_data[4].split(',')[1:]]
+        editor_ids = [fetch('user_base', "username==?", 'rowid', (editor,))[0][0] for editor in story_data[4].split(',')[1:]]
     editors = dict(zip(editor_ids, story_data[4].split(',')[1:]))
     no_edit = (s_rowid not in cont)
     if no_edit and len(editor_ids) > 0:
@@ -248,7 +242,7 @@ def story(s_rowid):
         author_id=story_data[5],
         story_id=s_rowid,
         didnt_edit=no_edit,
-        author_user=fetch('user_base', f"ROWID={story_data[5]}", 'username')[0][0]
+        author_user=fetch('user_base', "ROWID=?", 'username', (story_data[5],))[0][0]
     )
 
 @app.route('/edit/<s_rowid>', methods=["GET", "POST"]) # makes s_rowid a variable that is passed to the function
@@ -286,7 +280,7 @@ def edit(s_rowid):
                 """)
     recent = "" # displays most recent entry if editing existing story
     if s_rowid != '0':
-        story_d = fetch('story_base', f"rowid == '{s_rowid}'", 'title, last_entry')
+        story_d = fetch('story_base', "rowid == ?", 'title, last_entry', (s_rowid,))
         recent = f"""
         <h1> {story_d[0][0]} </h1>
         <p> Last entry: <br> {story_d[0][1]} </p>
@@ -294,11 +288,11 @@ def edit(s_rowid):
     return render_template("edit.html", display_title = (s_rowid == '0'), recent_content = recent)
 
 # HELPER FUNCTIONS
-def fetch(table, criteria, data):
+def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    query = f"SELECT {data} FROM {table} WHERE {criteria};"
-    c.execute(query)
+    query = f"SELECT {data} FROM {table} WHERE {criteria}"
+    c.execute(query, params)
     data = c.fetchall()
     db.commit()
     db.close()
@@ -309,12 +303,12 @@ def check_existence(table, s_rowid):
     c = db.cursor()
     if 'u_rowid' in session:
         if table == story_base:
-            c.execute(f"SELECT editors FROM story_base WHERE ROWID={s_rowid};")
+            c.execute("SELECT editors FROM story_base WHERE ROWID=?", (s_rowid,))
             db.commit()
             db.close()
             return str(session['u_rowid']) in c.fetchall()[0].split(',')
         else:
-            c.execute(f"SELECT contributions FROM user_base WHERE ROWID={session['u_rowid']};")
+            c.execute("SELECT contributions FROM user_base WHERE ROWID=?", (session['u_rowid'],))
             db.commit()
             db.close()
             return str(s_rowid) in c.fetchall()[0].split(',')
@@ -332,8 +326,8 @@ def create_user(username, password):
         c.execute("INSERT INTO user_base VALUES (?, ?, ?, ?, ?, ?)",(username, password, pfp, 'temp', contributions, times_cont))
 
         # set path
-        c.execute(f"SELECT rowid FROM user_base WHERE username=\'{username}\'")
-        c.execute(f"UPDATE user_base SET path = '/profile/{c.fetchall()[0][0]}' WHERE username=\'{username}\'")
+        c.execute("SELECT rowid FROM user_base WHERE username=?", (username,))
+        c.execute(f"UPDATE user_base SET path = '/profile/{c.fetchall()[0][0]}' WHERE username=?", (username,))
         db.commit()
         db.close()
         return True
@@ -344,47 +338,39 @@ def create_user(username, password):
 def update_story(s_rowid, editor_id, title, content):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    original_cont = fetch('user_base', f"rowid == '{editor_id}'", 'contributions')[0][0] # adds story id to contirbutions ",#,#"
-    new_num_cont = fetch('user_base', f"rowid == '{editor_id}'", 'times_cont')[0][0] + 1
+    original_cont = fetch('user_base', "rowid == ?", 'contributions', (editor_id,))[0][0] # adds story id to contirbutions ",#,#"
+    new_num_cont = fetch('user_base', "rowid == ?", 'times_cont', (editor_id,))[0][0] + 1
     if s_rowid == '0': # creating new story
         c.execute("SELECT title FROM story_base")
         titles = [t[0] for t in c.fetchall()]
         if not title in titles:
             print("here1")
-            author_user = fetch("user_base", f"rowid == '{editor_id}'", "username")[0][0]
+            author_user = fetch("user_base", "rowid == ?", "username", (editor_id,))[0][0]
             print("here2")
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
             c.execute("INSERT INTO story_base (path, title, content, last_entry, editors, author) VALUES (?, ?, ?, ?, ?, ?)", (path, title, content, content, '', editor_id))
             new_cont = str(fetch('story_base', True, 'COUNT(*)')[0][0] + 1)
-            c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + new_cont}' WHERE rowid == '{editor_id}'""")
-            c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
+            cc = original_cont + "," + new_cont
+            c.execute("UPDATE user_base SET contributions = ? WHERE rowid == ?", (cc, editor_id))
+            c.execute("UPDATE user_base SET times_cont = ? WHERE rowid == ?", (new_num_cont, editor_id))
             db.commit()
             db.close()
             return True
         return False # title already exists, prompt user to change title
 
     else: # updating existing story
-        c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + s_rowid}' WHERE rowid == '{editor_id}'""")
-        c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
-        original_content = fetch('story_base', f"rowid == '{s_rowid}'", 'content')[0][0]
-        c.execute(f"""
-                  UPDATE story_base
-                  SET content = '{original_content + "<br><br>" + content}'
-                  WHERE rowid == '{s_rowid}'
-                  """)
-        c.execute(f"""
-                  UPDATE story_base
-                  SET last_entry = '{content}'
-                  WHERE rowid == '{s_rowid}'
-                  """)
-        original_editors = fetch('story_base', f"rowid == '{s_rowid}'", 'editors')[0][0]
-        new_editor = fetch('user_base', f"rowid == '{editor_id}'", 'username')[0][0]
-        c.execute(f"""
-                  UPDATE story_base
-                  SET editors = '{original_editors + "," + new_editor}'
-                  WHERE rowid == '{s_rowid}'
-                  """)
+        cc = original_cont + "," + s_rowid
+        c.execute("UPDATE user_base SET contributions = ? WHERE rowid == ?", (cc, editor_id))
+        c.execute("UPDATE user_base SET times_cont = ? WHERE rowid == ?", (new_num_cont, editor_id))
+        original_content = fetch('story_base', 'rowid == ?', 'content', (s_rowid,))[0][0]
+        cnt = original_content + "<br><br>" + content
+        c.execute("UPDATE story_base SET content = ? WHERE rowid == ?", (cnt, s_rowid))
+        c.execute("UPDATE story_base SET last_entry = ? WHERE rowid == ?", (content, s_rowid))
+        original_editors = fetch('story_base', 'rowid == ?', 'editors', (s_rowid,))[0][0]
+        new_editor = fetch('user_base', 'rowid == ?', 'username', (editor_id,))[0][0]
+        eds = original_editors + "," + new_editor
+        c.execute("UPDATE story_base SET editors = ? WHERE rowid == ?", (eds, s_rowid))
         db.commit()
         db.close()
         return True
@@ -392,14 +378,14 @@ def update_story(s_rowid, editor_id, title, content):
 def update_pfp(pfp, u_rowid):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute(f"UPDATE user_base SET pfp = \'{pfp}\' WHERE ROWID=\'{u_rowid}\'")
+    c.execute("UPDATE user_base SET pfp = ? WHERE ROWID=?", (pfp, u_rowid))
     db.commit()
     db.close()
 
 def update_password(pw, username):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute(f"UPDATE user_base SET password = \'{pw}\' WHERE username=\'{username}\'")
+    c.execute("UPDATE user_base SET password = ? WHERE username=?", (pw, username))
     db.commit()
     db.close()
 

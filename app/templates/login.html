@@ -56,6 +56,7 @@
         {% else %}
           <p id="prompt"> {{ prompt | safe }} </p>
           <p> {{ error | safe }} </p>
+          <br>
           <form method='POST' action="/login">
             {{ request | safe }}
           </form>
