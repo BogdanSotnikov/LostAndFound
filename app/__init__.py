@@ -327,7 +327,7 @@ def create_user(username, password):
         pfp = random.choice(pfps)
         contributions = ""
         times_cont = 0
-        c.execute(f"INSERT INTO user_base VALUES(\'{username}\', \'{password}\', \'{pfp}\', 'temp', \'{contributions}\', {times_cont})")
+        c.execute("INSERT INTO user_base VALUES (?, ?, ?, ?, ?, ?)",(username, password, pfp, 'temp', contributions, times_cont))
 
         # set path
         c.execute(f"SELECT rowid FROM user_base WHERE username=\'{username}\'")
@@ -353,7 +353,7 @@ def update_story(s_rowid, editor_id, title, content):
             print("here2")
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
             print("here3")
-            c.execute(f"INSERT INTO story_base VALUES('{path}', '{title}', '{content}', '{content}', '', {editor_id})")
+            c.execute("INSERT INTO story_base (path, title, content, last_entry, editors, author) VALUES (?, ?, ?, ?, ?, ?)", (path, title, content, content, '', editor_id))
             new_cont = str(fetch('story_base', True, 'COUNT(*)')[0][0] + 1)
             c.execute(f"""UPDATE user_base SET contributions = '{original_cont + "," + new_cont}' WHERE rowid == '{editor_id}'""")
             c.execute(f"UPDATE user_base SET times_cont = '{new_num_cont}' WHERE rowid == '{editor_id}'")
