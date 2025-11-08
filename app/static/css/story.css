@@ -1,12 +1,12 @@
 @font-face {
     font-family: font;
-    src: url(arcadeclassic.regular.ttf);
+    src: url(/static/arcadeclassic.regular.ttf);
 }
 
 /* NAVBAR */
 nav {
     font-family: font;
-    border: none;  
+    border: none;
     background-color: #4F6D3A;
     padding: 0;
 }
@@ -72,5 +72,3 @@ h1{
 p{
     font-size: 130%;
 }
-
-
