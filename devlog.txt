@@ -209,3 +209,13 @@ STORY PAGE
     - author and editors section now has links to profile pages
 * ERRORS/BUGS:
     - delete extraneous whitespace when adding to editors list (method update_story)
+
+naomiK -- 2025-11-7 19:52
+WORKING ON STORY CSS
+* NEW CHANGES:
+	- changed buttons in story to links
+	- created css file and strawb3.jpg for story
+    - added styling to story css file
+    - removed author from list of editors
+    - added ellipsis to unedited story (except ones with one entry)
+    - changed editors in story html to list
