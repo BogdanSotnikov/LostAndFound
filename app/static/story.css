@@ -66,6 +66,7 @@ h1{
     flex-direction: column;
     background-color: #4F6D3A;
     padding: 1%;
+    overflow-wrap: break-word;
 }
 
 p{

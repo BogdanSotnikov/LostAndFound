@@ -102,8 +102,24 @@ button {
   align-self: center;
   width: 95%;
   height: clamp(0px,41vh,auto);
+  overflow-wrap: break-word;
 }
 
 ul {
   margin-top: -2%;
+}
+
+.lists {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;  
+  gap: 2em;
+  align-items: flex-start;
+}
+
+.col {
+  width: 45%;
+  display: flex;
+  flex-direction: column;      
+  overflow-wrap: break-word;
 }
