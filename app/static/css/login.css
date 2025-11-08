@@ -1,6 +1,6 @@
 @font-face {
   font-family: font;
-  src: url(arcadeclassic.regular.ttf);
+  src: url(/static/arcadeclassic.regular.ttf);
 }
 
 html, body {
@@ -23,7 +23,7 @@ html, body {
 
   height: 20vh;
   width: 95%;
-  background-image: url(leaf.jpg);
+  background-image: url(/static/leaf.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -83,11 +83,6 @@ h1 {
   width: 60%;
 }
 
-#prompt {
-  margin-top: 2em;
-  font-size: clamp(20px, 3.25vh, 3.5vh);
-}
-
 button, .sub1 {
   font-family: font;
   font-size: 115%;
@@ -98,6 +93,7 @@ button, .sub1 {
 
 #register {
   width: 6em;
+  margin-top: 0.7em;
 }
 
 #forgot {
@@ -107,8 +103,31 @@ button, .sub1 {
 
 #tops {
   position: relative;
-  bottom: 2vh;
+  top: -4vh;
 
   height:8vh;
   width: 85vh;
+}
+
+/* FORGOT PASSWORD */
+#prompt {
+  margin-top: 2em;
+  margin-bottom: 0;
+  font-size: clamp(20px, 3.25vh, 3.5vh);
+}
+
+.question {
+  position: relative;
+  bottom: 30px;
+  width: 60vw;
+  height: auto;
+}
+
+a {
+  position: absolute;
+  top: 10px;
+  left: 18px;
+
+  font-size: 2em;
+  color: black;
 }

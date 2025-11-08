@@ -1,6 +1,6 @@
 @font-face {
   font-family: font;
-  src: url(arcadeclassic.regular.ttf);
+  src: url(/static/arcadeclassic.regular.ttf);
 }
 
 html, body {
@@ -112,7 +112,7 @@ ul {
 .lists {
   display: flex;
   flex-flow: row wrap;
-  align-items: flex-start;  
+  align-items: flex-start;
   gap: 2em;
   align-items: flex-start;
 }
@@ -120,6 +120,6 @@ ul {
 .col {
   width: 45%;
   display: flex;
-  flex-direction: column;      
+  flex-direction: column;
   overflow-wrap: break-word;
 }

@@ -5,10 +5,13 @@
   <head>
     <link rel="stylesheet"
       type="text/css"
-      href="/static/login.css">
+      href="/static/css/login.css">
   </head>
 
   <body>
+    {% if not normal %}
+      <a href="/login"> X </a>
+    {% endif %}
     <div id="head">
       <h1>
         Login
