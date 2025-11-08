@@ -22,7 +22,9 @@
       </div>
 
       <div id='edit'>
-        {{ edit | safe }}
+        {% if own_profile %}
+          {{ edit | safe }}
+        {% endif %}
       </div>
     </div>
 

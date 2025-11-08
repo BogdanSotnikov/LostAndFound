@@ -150,9 +150,8 @@ def profileDefault():
 @app.route('/profile/<u_rowid>', methods=["GET", "POST"]) # makes u_rowid a variable that is passed to the function
 def profile(u_rowid):
     # session.clear()
-    if not 'u_rowid' in session and session['u_rowid'] == u_rowid:
+    if not 'u_rowid' in session:
         return redirect("/login")
-
     u_data = fetch('user_base',
                    f"ROWID={u_rowid}",
                    'username, pfp, times_cont, contributions')[0]
@@ -191,6 +190,7 @@ def profile(u_rowid):
             pfp=u_data[1],
             pfps=pfps,
             edit=edit,
+            own_profile=(session['u_rowid'][0] == int(u_rowid)),
             badge=badge,
             times_cont=u_data[2],
             contributions=conts)
@@ -200,6 +200,7 @@ def profile(u_rowid):
             pfp=u_data[1],
             pfps=pfps,
             edit=edit,
+            own_profile=(session['u_rowid'][0] == int(u_rowid)),
             badge=badge,
             times_cont=u_data[2],
             if_conts="No contributions yet. <br><br><br>")

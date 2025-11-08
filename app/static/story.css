@@ -41,7 +41,6 @@ html, body {
     /* turns body into a flex container and aligns everything vertically */
     display: flex;
     flex-direction: column;
-
 }
 
 .main {
@@ -54,6 +53,7 @@ html, body {
     width: 80vw;
     height: 28em;
     background-color: #bf5d6c;
+    overflow-wrap: break-word;
 }
 
 h1{
