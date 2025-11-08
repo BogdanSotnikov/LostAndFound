@@ -13,7 +13,7 @@ html, body {
     font-family: font;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('strawb2.jpg');
+    background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(/static/strawb2.jpg);
     /* turns body into a flex container and aligns everything vertically */
     display: flex;
     flex-direction: column;
