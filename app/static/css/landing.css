@@ -25,6 +25,10 @@ nav {
   padding: 0.75%;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
 .util {
   float: right;
   color: #8CB360;
