@@ -52,39 +52,41 @@ def login():
             return render_template("login.html",
                 normal=False,
                 prompt="Please &nbsp enter &nbsp your &nbsp username &nbsp below:",
-                request="""<input type='Text' name='f_user'> <br><br>
+                request="""<input type='Text' name='f_user' required> <br><br>
                 <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
         elif "f_user" in request.form:
             if request.form['f_user'] in usernames:
-                session['question'] = random.randint(1, 9) # change range when we have a certain number of questions
+                if not 'question' in session:
+                    session['question'] = random.randint(1, 9)
                 session['username'] = request.form['f_user']
                 return render_template("login.html",
                     normal=False,
                     prompt="Solve &nbsp the &nbsp math &nbsp problem &nbsp below:",
-                    request=f"""<image src="{math[session['question']][0]}"> <input type='Text' name='answer'> <br><br>
+                    request=f"""<image src="{math[session['question']][0]}" class="question"> <br><br>
+                    <input type='number' name='answer' required> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
             return render_template("login.html",
                 normal=False,
                 error="User &nbsp does &nbsp not &nbsp exist",
                 prompt="Please &nbsp enter &nbsp your &nbsp username &nbsp below:",
-                request="""<input type='Text' name='f_user'> <br><br>
+                request="""<input type='Text' name='f_user' required> <br><br>
                 <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
         elif "answer" in request.form:
-            print("answe4ed")
             if int(request.form['answer']) == math[session['question']][1]:
                 return render_template("login.html",
                     normal=False,
                     prompt="Enter &nbsp your &nbsp new &nbsp password &nbsp below:",
-                    request="""<input type='Text' name='new_pw'> <br><br>
+                    request="""<input type='Text' name='new_pw' required> <br><br>
                     <p>Confirm<p><br>
-                    <input type='Text' name='confirm'> <br><br>
+                    <input type='Text' name='confirm' required> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
             else:
                 return render_template("login.html",
                     normal=False,
                     error="You got it wrong :(",
                     prompt="Solve &nbsp the &nbsp math &nbsp problem &nbsp below:",
-                    request=f"""<image src="{math[session['question']][0]}"> <input type='Text' name='answer'> <br><br>
+                    request=f"""<image src="{math[session['question']][0]}" class="question"> <br><br>
+                    <input type='number' name='answer' required> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
             #return render_template("login.html", normal=True) # probably use dbs to save problems + answers?? or would it be better to just have a dictionary
         elif "new_pw" in request.form:
@@ -97,8 +99,7 @@ def login():
                     <p>Confirm<p><br>
                     <input type='Text' name='confirm'> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
-            update_password(request.form['new_pw'], session['username'][0])
-            session.clear()
+            update_password(request.form['new_pw'], session['username'])
             return render_template("login.html", normal=True)
 
 
@@ -119,6 +120,7 @@ def login():
                                 "rowid")[0]
     if 'u_rowid' in session:
         return redirect("/")
+    session.clear()
     return render_template("login.html", normal=True)
 
 @app.route('/logout', methods=["GET", "POST"])
