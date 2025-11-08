@@ -3,32 +3,36 @@
 <html>
 
   <head>
-
+    <link rel="stylesheet"
+      type="text/css"
+      href="/static/edit.css">
   </head>
 
   <nav>
+    <a href='/' class="back">&#8592;</a>
     <a href='/logout' class="util">Logout</a>
     <a href='/profile' class="util">My Profile</a>
-    <a href='/edit/0' class="util">Create</a>
   </nav>
 
   <body>
     <br>
-    <form method="POST" action="">
-      {{ error|safe }}
-      {% if display_title %}
-        <p>Title</p>
-        <input type="text" name="story_title" placeholder="Enter your title here" required>
-        <br><br>
-        <p>Content</p>
-      {% else %}
-        {{recent_content|safe}}
-        <p>New Content</p>
-      {% endif %}
-      <textarea name="content" rows="40" cols="100" placeholder="Enter your story here..." required></textarea>
-      <br>
-      <input type="submit" value="Publish Changes">
-    </form>
+    <div class='main'>
+      <form method="POST" action="">
+        {{ error|safe }}
+        {% if display_title %}
+          <p>Title:</p>
+          <input type="text" name="story_title" placeholder="Enter your title here" required>
+          <br><br>
+          <p>Content:</p>
+        {% else %}
+          {{recent_content|safe}}
+          <p>New Content:</p>
+        {% endif %}
+        <textarea name="content" rows="40" cols="100" placeholder="Enter your story here..." required></textarea>
+        <br>
+        <input type="submit" id='submit' value="Publish Changes">
+      </form>
+    </div>
   </body>
 
   <footer>

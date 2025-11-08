@@ -21,6 +21,9 @@ db.close()
 
 # VARIABLES
 pfps = [f"/static/pfp{i}.jpg" for i in range(1,13)]
+math_problems = [f"/static/math/math{i}.png" for i in range(1, 11)]
+math_ans = [26, 40, 14, 16, 32, 1, 271, 15, 10, 12]
+math = list(zip(math_problems, math_ans))
 
 # HTML PAGES
 # LANDING PAGE
@@ -53,13 +56,12 @@ def login():
                 <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
         elif "f_user" in request.form:
             if request.form['f_user'] in usernames:
-                session['question'] = random.randint(1,5) # change range when we have a certain number of questions
+                session['question'] = random.randint(1, 9) # change range when we have a certain number of questions
                 session['username'] = request.form['f_user']
                 return render_template("login.html",
                     normal=False,
                     prompt="Solve &nbsp the &nbsp math &nbsp problem &nbsp below:",
-                    #/math{session['question'][0]}.jpg"
-                    request=f"""<image src="/static/leaf.jpg"> <input type='Text' name='answer'> <br><br>
+                    request=f"""<image src="{math[session['question']][0]}"> <input type='Text' name='answer'> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
             return render_template("login.html",
                 normal=False,
@@ -68,7 +70,23 @@ def login():
                 request="""<input type='Text' name='f_user'> <br><br>
                 <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
         elif "answer" in request.form:
-            return render_template("login.html", normal=True) # probably use dbs to save problems + answers?? or would it be better to just have a dictionary
+            print("answe4ed")
+            if int(request.form['answer']) == math[session['question']][1]:
+                return render_template("login.html",
+                    normal=False,
+                    prompt="Enter &nbsp your &nbsp new &nbsp password &nbsp below:",
+                    request="""<input type='Text' name='new_pw'> <br><br>
+                    <p>Confirm<p><br>
+                    <input type='Text' name='confirm'> <br><br>
+                    <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+            else:
+                return render_template("login.html",
+                    normal=False,
+                    error="You got it wrong :(",
+                    prompt="Solve &nbsp the &nbsp math &nbsp problem &nbsp below:",
+                    request=f"""<image src="{math[session['question']][0]}"> <input type='Text' name='answer'> <br><br>
+                    <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
+            #return render_template("login.html", normal=True) # probably use dbs to save problems + answers?? or would it be better to just have a dictionary
         elif "new_pw" in request.form:
             if not request.form['new_pw'] == request.form['confirm']:
                 return render_template("login.html",
@@ -76,6 +94,8 @@ def login():
                     error="Passwords do not match, please try again!",
                     prompt="Enter &nbsp your &nbsp new &nbsp password &nbsp below:",
                     request="""<input type='Text' name='new_pw'> <br><br>
+                    <p>Confirm<p><br>
+                    <input type='Text' name='confirm'> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
             update_password(request.form['new_pw'], session['username'][0])
             session.clear()
@@ -179,7 +199,7 @@ def profile(u_rowid):
             pfp=u_data[1],
             pfps=pfps,
             edit=edit,
-            own_profile=(session['u_rowid'][0] == u_rowid),
+            own_profile=(session['u_rowid'][0] == int(u_rowid)),
             badge=badge,
             times_cont=u_data[2],
             contributions=contss)

@@ -219,3 +219,9 @@ WORKING ON STORY CSS
     - removed author from list of editors
     - added ellipsis to unedited story (except ones with one entry)
     - changed editors in story html to list
+
+jakeL -- 2025-11-7 22:32
+FORGOT PASSWORD FUNCTION
+* NEW CHANGES:
+    - added 10 math problems and answers to problem set
+    - user now able to solve a math problem to change password if forgotten
