@@ -36,11 +36,17 @@ def homepage():
     tableString = ""
     for i in range(fetch('story_base', True, 'COUNT(*)')[0][0]):
         if (i%3==0):
-            tableString +="<tr>"
-        tableString+= f"<a href="
+            tableString +="<tr></br>"
+        tableString+= f"""
+        <td>
+            <a href='/story/{i+1}'>{fetch("story_base", f"rowid={i+1}", "title")[0][0]}</a>
+            <p>by <a href='/profile/{fetch("story_base", f"rowid={i+1}", "author")[0][0]}'>{fetch("user_base", f"rowid={fetch("story_base", f"rowid={i+1}", "author")[0][0]}", "username")[0][0]}</a></p>
+        </td>"""
         if (i%3==2):
             tableString +="</tr>"
-    return render_template("landing.html")
+    if (tableString[-3]=='t'):
+        tableString+="</tr>"
+    return render_template("landing.html", stories = tableString)
 
 # USER INTERACTIONS
 @app.route('/login', methods=["GET", "POST"])

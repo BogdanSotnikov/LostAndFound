@@ -56,3 +56,8 @@ a:hover {
 h1 {
   margin-bottom: -20px;
 }
+
+td
+{
+  width: 33%
+}
