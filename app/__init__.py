@@ -308,6 +308,14 @@ def search(rqst):
         </p>
         </br>
         """
+    for find in fetch("story_base", f"content LIKE '%{rqst}%'", "rowid"):
+        rslts += f"""<a href='/story/{find[0]}'>{fetch("story_base", f"rowid={find[0]}", "title")[0][0]}</a>
+        <p>by
+        <a href='/profile/{fetch("story_base", f"rowid={find[0]}", "author")[0][0]}'>
+        {fetch("user_base", f"rowid={fetch("story_base", f"rowid={find[0]}", "author")[0][0]}", "username")[0][0]}</a>
+        </p>
+        </br>
+        """
 
     return render_template("search.html", query = rqst, results = rslts)
 
