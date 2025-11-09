@@ -232,10 +232,17 @@ CSS AND STUFF
   - working on story css
   - fixed css to accommodate for new forgot password
   - fixed any small issues that were found
-  
+
 naomiK -- 2025-11-8 1:07
 WORKING ON INJECTION PROBLEMS
 * NEW CHANGES:
 	- changed a bunch of f strings to ? placeholder to prevent SQL injection issues with user input
 	- made profile display two lists of stories: authored and edited
     - added some profile and login css
+
+bogdanS -- 2025-11-8 22:54
+WORKING ON MAIN PAGE
+* NEW CHANGES:
+  - Added a display of all stories on the landing page
+  - Added a search field and button on the landing page
+  - Added search page and functionality
