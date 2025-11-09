@@ -27,10 +27,13 @@ math = list(zip(math_problems, math_ans))
 
 # HTML PAGES
 # LANDING PAGE
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def homepage():
     if not 'u_rowid' in session:
         return redirect("/login")
+    if request.method == 'POST':
+        if "search" in request.form:
+            return redirect(f"/search/{request.form['searchText']}")
     #if request.method == 'POST':
         #session['u_rowid'] = request.form['u_rowid']
     tableString = ""

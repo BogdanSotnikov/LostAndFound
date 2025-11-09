@@ -29,12 +29,26 @@ a:hover {
   text-decoration: underline;
 }
 
-.util {
+.util, .sub1, input {
   float: right;
   color: #8CB360;
   text-decoration: none;
 
   margin-left: 1em;
+}
+
+.sub1, input
+{
+  font-family: font;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  float: left;
+}
+
+input
+{
+  border-bottom: solid;
 }
 
 /* MAIN CONTENT */
