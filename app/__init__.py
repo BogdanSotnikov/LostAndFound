@@ -296,6 +296,22 @@ def edit(s_rowid):
         """
     return render_template("edit.html", display_title = (s_rowid == '0'), recent_content = recent)
 
+@app.route('/search/<rqst>')
+def search(rqst):
+    rslts = ""
+
+    for find in fetch("story_base", f"title LIKE '%{rqst}%'", "rowid"):
+        rslts += f"""<a href='/story/{find[0]}'>{fetch("story_base", f"rowid={find[0]}", "title")[0][0]}</a>
+        <p>by
+        <a href='/profile/{fetch("story_base", f"rowid={find[0]}", "author")[0][0]}'>
+        {fetch("user_base", f"rowid={fetch("story_base", f"rowid={find[0]}", "author")[0][0]}", "username")[0][0]}</a>
+        </p>
+        </br>
+        """
+
+    return render_template("search.html", query = rqst, results = rslts)
+
+
 # HELPER FUNCTIONS
 def fetch(table, criteria, data, params = ()):
     db = sqlite3.connect(DB_FILE)

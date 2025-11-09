@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <link rel="stylesheet"
+      type="text/css"
+      href="/static/css/search.css">
+  </head>
+
+  <nav>
+    <a href='/logout' class="util">Logout</a>
+    <a href='/profile' class="util">My Profile</a>
+    <a href='/edit/0' class="util">Create</a>
+    <a href='/' class="back">&#8592;</a>
+    <form method='POST' action="/">
+      <input type="text" name="searchText" required>
+      <input type="submit" name="search" class="sub1" value="Search on Website" id="search">
+    </form>
+  </nav>
+
+  <body>
+    <br><br>
+    <div class='main'>
+      <h2>Search &nbsp results &nbsp for &nbsp {{query}}:</h2>
+        {{results|safe}}
+   </div>
+
+  </body>
+
+  <footer>
+
+  </footer>
+
+</html>
