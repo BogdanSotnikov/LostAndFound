@@ -65,13 +65,18 @@ input
   width: 95%;
 
   text-align: center;
+
 }
 
 h1 {
   margin-bottom: -20px;
 }
 
-td
-{
+td {
+  word-break: break-all;
   width: 33%
+}
+
+table {
+  border-spacing: 50px;
 }

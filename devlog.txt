@@ -246,3 +246,11 @@ WORKING ON MAIN PAGE
   - Added a display of all stories on the landing page
   - Added a search field and button on the landing page
   - Added search page and functionality
+
+naomiK -- 2025-11-9 0:38
+LAST DETAILS
+* NEW CHANGES:
+	- worked on more injection issues
+	- changed embedded f-strings
+    - removed repeating search results
+    - story and landing css

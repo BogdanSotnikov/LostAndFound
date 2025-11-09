@@ -39,15 +39,19 @@ def homepage():
     tableString = ""
     for i in range(fetch('story_base', True, 'COUNT(*)')[0][0]):
         if (i%3==0):
-            tableString +="<tr></br>"
+            tableString +="<tr>"
+        story_id = i+1
+        title = fetch("story_base", f"rowid={story_id}", "title")[0][0]
+        author_id = fetch("story_base", f"rowid={story_id}", "author")[0][0]
+        author = fetch("user_base", f"rowid={author_id}", "username")[0][0]
         tableString+= f"""
         <td>
-            <a href='/story/{i+1}'>{fetch("story_base", f"rowid={i+1}", "title")[0][0]}</a>
-            <p>by <a href='/profile/{fetch("story_base", f"rowid={i+1}", "author")[0][0]}'>{fetch("user_base", f"rowid={fetch("story_base", f"rowid={i+1}", "author")[0][0]}", "username")[0][0]}</a></p>
+            <a href='/story/{story_id}'>{title}</a>
+            <p>by <a href='/profile/{author_id}'>{author}</a></p>
         </td>"""
         if (i%3==2):
             tableString +="</tr>"
-    if (tableString[-3]=='t'):
+    if not tableString.strip().endswith("</tr>"):
         tableString+="</tr>"
     return render_template("landing.html", stories = tableString)
 
@@ -299,23 +303,29 @@ def edit(s_rowid):
 @app.route('/search/<rqst>')
 def search(rqst):
     rslts = ""
-
-    for find in fetch("story_base", f"title LIKE '%{rqst}%'", "rowid"):
-        rslts += f"""<a href='/story/{find[0]}'>{fetch("story_base", f"rowid={find[0]}", "title")[0][0]}</a>
+    r = []
+    for find in fetch("story_base", "title LIKE ?", "rowid", (f"%{rqst}%",)):
+        ttl = fetch("story_base", f"rowid={find[0]}", "title")[0][0]
+        athr_id = fetch("story_base", f"rowid={find[0]}", "author")[0][0]
+        athr = fetch("user_base", f"rowid={athr_id}", "username")[0][0]
+        rslts += f"""<a href='/story/{find[0]}'>{ttl}</a>
         <p>by
-        <a href='/profile/{fetch("story_base", f"rowid={find[0]}", "author")[0][0]}'>
-        {fetch("user_base", f"rowid={fetch("story_base", f"rowid={find[0]}", "author")[0][0]}", "username")[0][0]}</a>
+        <a href='/profile/{athr_id}'>{athr}</a>
         </p>
         </br>
         """
-    for find in fetch("story_base", f"content LIKE '%{rqst}%'", "rowid"):
-        rslts += f"""<a href='/story/{find[0]}'>{fetch("story_base", f"rowid={find[0]}", "title")[0][0]}</a>
-        <p>by
-        <a href='/profile/{fetch("story_base", f"rowid={find[0]}", "author")[0][0]}'>
-        {fetch("user_base", f"rowid={fetch("story_base", f"rowid={find[0]}", "author")[0][0]}", "username")[0][0]}</a>
-        </p>
-        </br>
-        """
+        r += [ttl]
+    for find in fetch("story_base", "content LIKE ?", "rowid", (f"%{rqst}%",)):
+        ttl = fetch("story_base", f"rowid={find[0]}", "title")[0][0]
+        athr_id = fetch("story_base", f"rowid={find[0]}", "author")[0][0]
+        athr = fetch("user_base", f"rowid={athr_id}", "username")[0][0]
+        if ttl not in r:
+            rslts += f"""<a href='/story/{find[0]}'>{ttl}</a>
+            <p>by
+            <a href='/profile/{athr_id}'>{athr}</a>
+            </p>
+            </br>
+            """
 
     return render_template("search.html", query = rqst, results = rslts)
 
