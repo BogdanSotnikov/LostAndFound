@@ -256,8 +256,8 @@ def story(s_rowid):
 def edit(s_rowid):
     if not 'u_rowid' in session:
         return redirect("/login")
-    if s_rowid in fetch('user_base', f'ROWID={session['u_rowid'][0]}', 'contributions').split(','):
-        return redirect(f'/story/{s_rowid}')
+    if s_rowid in fetch('user_base', f"ROWID={session['u_rowid'][0]}", 'contributions')[0][0].split(','):
+        return redirect(f"/story/{s_rowid}")
     if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0]:
         return redirect("/")
     if request.method == "POST":
