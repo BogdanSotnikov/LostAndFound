@@ -29,26 +29,12 @@ a:hover {
   text-decoration: underline;
 }
 
-.util, .sub1, input {
+.util {
   float: right;
   color: #8CB360;
   text-decoration: none;
 
   margin-left: 1em;
-}
-
-.sub1, input
-{
-  font-family: font;
-  font-size: 24px;
-  background-color: transparent;
-  border: none;
-  float: left;
-}
-
-input
-{
-  border-bottom: solid;
 }
 
 /* MAIN CONTENT */
@@ -72,9 +58,40 @@ h1 {
   margin-bottom: -20px;
 }
 
+h2 {
+  margin-bottom: -35px;
+}
+
+input[type=text] {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-color: transparent;
+
+  padding:1em;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: -2px;
+  font-size: 115%;
+}
+
+button[type=submit] {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  position: relative;
+  top: 0.23em;
+  height: 1.47em;
+  border-color: transparent;
+  font-size: 110%;
+}
+
 td {
   word-break: break-all;
   width: 33%
+}
+
+tr {
+  font-size: 140%;
 }
 
 table {

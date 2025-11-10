@@ -34,8 +34,6 @@ def homepage():
     if request.method == 'POST':
         if "search" in request.form:
             return redirect(f"/search/{request.form['searchText']}")
-    #if request.method == 'POST':
-        #session['u_rowid'] = request.form['u_rowid']
     tableString = ""
     for i in range(fetch('story_base', True, 'COUNT(*)')[0][0]):
         if (i%3==0):
@@ -326,7 +324,8 @@ def search(rqst):
             </p>
             </br>
             """
-
+    if len(rslts) < 1:
+        rslts = "<p> No such stories found. </p>"
     return render_template("search.html", query = rqst, results = rslts)
 
 

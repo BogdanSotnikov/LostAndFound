@@ -12,10 +12,6 @@
     <a href='/logout' class="util">Logout</a>
     <a href='/profile' class="util">My Profile</a>
     <a href='/edit/0' class="util">Create</a>
-    <form method='POST' action="/">
-      <input type="text" name="searchText" required>
-      <input type="submit" name="search" class="sub1" value="Search on Website" id="search">
-    </form>
   </nav>
 
   <body>
@@ -23,6 +19,11 @@
     <div class='main'>
       <h1>Telephone &nbsp Online &nbsp 2.0 &nbsp V3 &nbsp MKIV &nbsp .io</h1>
       <h3>Team &nbsp Lost &nbsp and &nbsp Found</h3>
+      <br>
+      <form method='POST' action="/">
+        <input type="text" name="searchText" required>
+        <button type="submit" name="search" class="sub1" id="search"> <img src="/static/search.png" alt="Search on Website"> </button>
+      </form>
       <br>
       <h2>Latest &nbsp Stories:</h2>
       <table>
