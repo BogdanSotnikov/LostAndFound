@@ -2,7 +2,9 @@
 
 ### PM: Bogdan Sotnikov
 
-### Devos: Jake Liu, Joyce Lin, Naomi Kurian
+### Story and editing pages: Jake Liu
+### Profile, CSS, and routing: Joyce Lin
+### Login and registration pages: Naomi Kurian
 
 
 ## Description: 
