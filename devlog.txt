@@ -261,3 +261,12 @@ MORE CSS
   - kind of finalizing story css
   - updated search bar display
   - added a "no stories found" thing when searching
+
+bogdanS -- 2025-11-9 22:03
+FINAL TOUCHES
+* NEW CHANGES:
+  - Updated devlog
+  - Made final changes to CSS
+  - Made final changes to code
+    - Patched up security vulnerabilities and broken paths
+  - Fixed bugs
