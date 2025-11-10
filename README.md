@@ -28,11 +28,10 @@ you are done
 
 ## Launch codes:
 
-now run this:
+now run this in your terminal:
 
 ```
-cd app
-python __init__.py
+flask run
 ```
 
 ctrl-click the link in the flask console
