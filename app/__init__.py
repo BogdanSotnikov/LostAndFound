@@ -226,7 +226,7 @@ def profile(u_rowid):
 def story(s_rowid):
     if not 'u_rowid' in session:
         return redirect("/login")
-    if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
+    if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0]:
         return redirect("/")
 
     story_data = fetch("story_base", "rowid == ?", "*", (s_rowid,))[0]
