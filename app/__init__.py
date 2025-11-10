@@ -336,21 +336,6 @@ def fetch(table, criteria, data, params = ()):
     db.close()
     return data
 
-def check_existence(table, s_rowid):
-    db = sqlite3.connect(DB_FILE)
-    c = db.cursor()
-    if 'u_rowid' in session:
-        if table == story_base:
-            c.execute("SELECT editors FROM story_base WHERE ROWID=?", (s_rowid,))
-            db.commit()
-            db.close()
-            return str(session['u_rowid']) in c.fetchall()[0].split(',')
-        else:
-            c.execute("SELECT contributions FROM user_base WHERE ROWID=?", (session['u_rowid'],))
-            db.commit()
-            db.close()
-            return str(s_rowid) in c.fetchall()[0].split(',')
-
 def create_user(username, password):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
