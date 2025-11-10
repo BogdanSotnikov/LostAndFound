@@ -67,13 +67,15 @@ h1 {
 }
 
 p {
-  font-size: 110%;
+  font-size: 190%;
+  margin-bottom: 10px;
 }
 
 input[type=text], textarea {
   border-radius: 4px;
   border-width: thin;
   border-color: black;
+  background-color: #bf7a83;
 }
 
 #submit {
