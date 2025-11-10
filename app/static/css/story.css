@@ -8,7 +8,8 @@ html, body {
     margin: 0;
     padding: 0;
     /* background-image: url(/static/strawb3.jpg); */
-    background-color: #b23c4c;
+    background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(/static/plaid.png);
+
 
     /* turns body into a flex container and aligns everything vertically */
     display: flex;
@@ -54,12 +55,28 @@ a {
   }
 
 /* MAIN CONTENT */
+#backing {
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  width: 84.5vw;
+  height: 41em;
+  top: 18vh;
+  right: 10vw;
+  align-self: center;
+  background-color: #b23c4c;
+  filter: brightness(85%);
+}
+
 .main {
     display: flex;
     padding: 2%;
     padding-top: 5em;
     margin-top: 2em;
     margin-bottom: -9em;
+
+    position: relative;
+    z-index: 2;
 
     align-self: center;
     flex-direction: column;

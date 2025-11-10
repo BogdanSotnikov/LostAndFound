@@ -254,3 +254,10 @@ LAST DETAILS
 	- changed embedded f-strings
     - removed repeating search results
     - story and landing css
+
+joyceL -- 2025-11-8 00:52
+MORE CSS
+* NEW CHANGES:
+  - kind of finalizing story css
+  - updated search bar display
+  - added a "no stories found" thing when searching

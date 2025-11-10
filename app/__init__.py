@@ -386,11 +386,8 @@ def update_story(s_rowid, editor_id, title, content):
         c.execute("SELECT title FROM story_base")
         titles = [t[0] for t in c.fetchall()]
         if not title in titles:
-            print("here1")
             author_user = fetch("user_base", "rowid == ?", "username", (editor_id,))[0][0]
-            print("here2")
             path = f"/story/{fetch('story_base', True, 'COUNT(*)')[0][0] + 1}"
-            print("here3")
             c.execute("INSERT INTO story_base (path, title, content, last_entry, editors, author) VALUES (?, ?, ?, ?, ?, ?)", (path, title, content, content, '', editor_id))
             new_cont = str(fetch('story_base', True, 'COUNT(*)')[0][0] + 1)
             cc = original_cont + "," + new_cont
