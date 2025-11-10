@@ -99,7 +99,6 @@ def login():
                     request=f"""<image src="{math[session['question']][0]}" class="question"> <br><br>
                     <input type='number' name='answer' required> <br><br>
                     <input type='Submit' name='sub1' class='sub1' value='Submit'>""")
-            #return render_template("login.html", normal=True) # probably use dbs to save problems + answers?? or would it be better to just have a dictionary
         elif "new_pw" in request.form:
             if not request.form['new_pw'] == request.form['confirm']:
                 return render_template("login.html",
@@ -194,7 +193,6 @@ def profile(u_rowid):
             conts.append(fetch('story_base', 'rowid = ?', 'title, path, author', (story,))[0])
         conts_au = []
         conts_ed = []
-        print(type(u_rowid))
         for st in conts:
             if st[2] == int(u_rowid):
                 conts_au.append(st)
@@ -226,10 +224,8 @@ def profile(u_rowid):
 #STORY INTERACTIONS
 @app.route('/story/<s_rowid>') # makes s_rowid a variable that is passed to the function
 def story(s_rowid):
-    print("here1")
     if not 'u_rowid' in session:
         return redirect("/login")
-    print(type(s_rowid))
     if int(s_rowid) > fetch('story_base', True, 'COUNT(*)')[0][0] + 1:
         return redirect("/")
 
